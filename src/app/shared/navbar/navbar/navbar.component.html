@@ -1,0 +1,48 @@
+<style>
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        backdrop-filter: blur(20px);
+        height: 70px;
+    }
+    .navbar-logo {
+        margin-left: 0.5%;
+        margin-top: 0.5%;
+    }
+    .navbar-logo h1 {
+        display: inline;
+        opacity: 85%;
+        background: linear-gradient(90deg, rgba(253,45,29,1) 0%, rgba(252,176,69,1) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .navbar-logo img {
+        width: 3%;
+        height: auto;
+        opacity: 85%;
+    }
+    .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 0.73rem;
+    }
+
+</style>
+
+<nav class="navbar">
+    <div class="wrapper">
+        <div class="navbar-logo">
+            <img src="assets/img/bgulogo.png"/>
+            <h1> BGU Meteorological Service </h1>
+        </div>
+        <ul class="navbar-links"> 
+            <a routerLink="/">Home</a>
+            <a routerLink="/about">About</a>
+            <a routerLink="/contact">Blog</a>
+        </ul>
+        <div class="navbar-actions">
+        <!-- Add login/logout buttons or user-related actions here -->
+        </div>
+    </div>
+</nav>
