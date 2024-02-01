@@ -12,4 +12,14 @@ export class DataService {
   getVariable(): Observable<any> {
     return this.http.get<any>('http://127.0.0.1:8000/get-variable');
   }
+
+  getCurrentWeatherForSite(site: string): Observable<any> {
+    const requestData = { site: site }; 
+    return this.http.post<any>('http://127.0.0.1:8000/get-current-weather', requestData);
+  }
+
+  getAllSites(): Observable<any> {
+    return this.http.get<any>('http://127.0.0.1:8000/get-all-sites');
+  }
+
 }
