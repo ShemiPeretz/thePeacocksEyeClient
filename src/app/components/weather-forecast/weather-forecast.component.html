@@ -1,17 +1,25 @@
 <div class="current-weather">
     <h2>Current Weather</h2>
-    <!-- <div class="city-dropdown">
+    <div class="city-dropdown">
       <label for="city">Select City:</label>
-      <select id="city" [(ngModel)]="selectedCity">
-        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      <select [(ngModel)]="selectedSite" (change)="onDropdownChange($event)">
+        <option *ngFor="let site of sites" [ngValue]="site">{{ site }}</option>
       </select>
-    </div> -->
-    <div class="weather-info">
-        <div class="temperature">{{ temperature }}°C</div>
-    <div class="extra-info">
-        <div class="wind-speed">Wind Speed: {{ windSpeed }} m/s</div>
-        <div class="wind-direction">Wind Direction: {{ windDirection }}</div>
-        <div class="uv-level">UV Level: {{ uv }}</div>
-        <div class="humidity">Humidity: {{ humidity }}%</div>
     </div>
-  </div>
+
+    <mat-label>Favorite food</mat-label>
+    <mat-select>
+      @for (site of sites; track site) {
+        <mat-option [value]="site">{{ site }}</mat-option>
+      }
+    </mat-select>
+    <!-- <select (change)="onDropdownChange($event)">
+      <option *ngFor="let site of sites" [value]="site">{{ site }}</option>
+    </select> -->
+    <div class="weather-info">
+      <div class="temperature">{{ temperature }}°C</div>
+      <div class="wind-speed">Wind Speed: {{ windSpeed }} m/s</div>
+      <div class="wind-direction">Wind Direction: {{ windDirection }}</div>
+      <div class="uv-level">UV Level: {{ uv }}</div>
+      <div class="humidity">Humidity: {{ humidity }}%</div>
+    </div>

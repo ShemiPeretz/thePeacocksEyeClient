@@ -14,8 +14,5 @@ export class AppComponent {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.getVariable().subscribe(data => {
-      this.source = data.variable;
-    });
   }
 }
