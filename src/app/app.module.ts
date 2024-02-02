@@ -8,7 +8,8 @@ import { NavbarComponent } from './shared/navbar/navbar/navbar.component';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import {MatSelectModule} from '@angular/material/select';
+import {MatLabel, MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule
   ],
   providers: [
     provideClientHydration(),
