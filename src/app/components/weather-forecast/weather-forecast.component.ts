@@ -86,9 +86,7 @@ export class WeatherForecastComponent {
   }
 
   onDropdownChange(event: any) {
-    console.log("****************ONDATACHANGE**************");
-    console.log((event.target as HTMLSelectElement).value);
-    const newSelectedSite = (event.target as HTMLSelectElement).value;
+    const newSelectedSite = event.value;
     this.selectedSite = newSelectedSite;
     this.getCurrentWeatherForSite();
   }

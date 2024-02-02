@@ -9,6 +9,7 @@ import { WeatherForecastComponent } from './components/weather-forecast/weather-
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import {MatSelectModule} from '@angular/material/select';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {MatSelectModule} from '@angular/material/select';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     MatSelectModule
   ],

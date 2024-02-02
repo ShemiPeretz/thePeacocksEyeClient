@@ -7,7 +7,8 @@
 <div class="current-weather">
   <h2>Current Weather</h2>
   <div class="dropdown">
-    <mat-select (valueChange)="onDropdownChange($event)" (selectionChange)="onDropdownChange($event)" >
+    <!-- <mat-select (valueChange)="onDropdownChange($event)" (selectionChange)="onDropdownChange($event)"> -->
+    <mat-select [(ngModel)]="selectedSite" (selectionChange)="onDropdownChange($event)">
       <mat-option *ngFor="let site of allSites" [value]="site">
         {{ site }}
       </mat-option>
