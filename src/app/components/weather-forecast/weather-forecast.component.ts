@@ -19,7 +19,7 @@ enum CardinalDirection {
   styleUrl: './weather-forecast.component.scss'
 })
 export class WeatherForecastComponent {
-  sites: string[] = ['Beer-Sheva', 'Haifa'];
+  allSites: string[] = [];
   selectedSite: string = 'Beer-Sheva';
   temperature: Number = 0; // [celsius]
   humidity: Number = 0; // [percent]
@@ -35,6 +35,7 @@ export class WeatherForecastComponent {
     // this.dataService.getAllSites().subscribe(data => {
     //   this.sites = data.sites;
     // });
+    this.allSites = ['Beer-Sheva', 'Haifa'];
     this.getCurrentWeatherForSite();
   }
 
