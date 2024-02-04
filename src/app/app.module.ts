@@ -8,15 +8,19 @@ import { NavbarComponent } from './shared/navbar/navbar/navbar.component';
 import { WeatherForecastComponent } from './components/weather-forecast/weather-forecast.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import {MatLabel, MatSelectModule} from '@angular/material/select';
-import {MatIconModule} from '@angular/material/icon';
+import { MatSelectModule} from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import { MlModelsComponent } from './components/ml-models/ml-models.component';
+import { GraphsComponent } from './components/graphs/graphs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    WeatherForecastComponent
+    WeatherForecastComponent,
+    MlModelsComponent,
+    GraphsComponent
   ],
   imports: [
     BrowserModule,

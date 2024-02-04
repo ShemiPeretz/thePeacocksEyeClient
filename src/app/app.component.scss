@@ -1,0 +1,20 @@
+.container {
+  background-image: url("../assets/img/antoine-barres.jpg");
+  //   background-color: black;
+  background-size: cover;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  height: calc(100vh - 100px);
+}
+
+body,
+canvas {
+  margin: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

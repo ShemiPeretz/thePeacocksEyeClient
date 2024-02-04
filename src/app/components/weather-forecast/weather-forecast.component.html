@@ -1,14 +1,11 @@
-<style>
-  .dropdown{
-    max-width: 10%;
-  }
-</style>
-
 <div class="current-weather" dir="rtl">
   <h2>Current Weather</h2>
   <div class="dropdown">
     <!-- <mat-select (valueChange)="onDropdownChange($event)" (selectionChange)="onDropdownChange($event)"> -->
-    <mat-select [(ngModel)]="selectedSite" (selectionChange)="onDropdownChange($event)">
+    <mat-select
+      [(ngModel)]="selectedSite"
+      (selectionChange)="onDropdownChange($event)"
+    >
       <mat-option *ngFor="let site of allSites" [value]="site">
         {{ site }}
       </mat-option>
@@ -22,5 +19,3 @@
     <div class="humidity">Humidity: {{ humidity }}%</div>
   </div>
 </div>
-
-
