@@ -1,0 +1,43 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    backdrop-filter: blur(20px);
+    height: 70px;
+    width:100%;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+.navbar-logo {
+    margin: 0.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width:100%;
+}
+.navbar-logo h1 {
+    display: inline;
+    opacity: 85%;
+    background: linear-gradient(90deg, rgba(253,45,29,1) 0%, rgba(252,176,69,1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+.navbar-logo img {
+    width: 3%;
+    height: auto;
+    opacity: 85%;
+}
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 0.73rem;
+}
+.navbar-actions{
+    display: flex;
+    button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+}

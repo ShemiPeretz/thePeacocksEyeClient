@@ -162,6 +162,13 @@
     fill: var(--gray-900);
   }
 
+  .main{
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    height: calc(100vh - 100px);
+  }
+
   @media screen and (max-width: 650px) {
     .content {
       flex-direction: column;
@@ -184,7 +191,9 @@ top: 0; right: 0; bottom: 0; left: 0;
 background-image: url('assets/img/merkava.jpg');
 border-style: none;">
   <app-navbar></app-navbar>
-  <app-weather-forecast></app-weather-forecast>
+  <div class="main">
+    <app-weather-forecast></app-weather-forecast>
+  </div>
 </div>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
