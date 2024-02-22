@@ -13,6 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MlModelsComponent } from './components/ml-models/ml-models.component';
 import { GraphsComponent } from './components/graphs/graphs.component';
+import { LayoutSidebarComponent } from './components/graphs/layout-sidebar/layout-sidebar.component';
+import { FourGarphsLayoutComponent } from './components/graphs/layouts/four-garphs-layout/four-garphs-layout.component';
+import { TwoGarphsLayoutComponent } from './components/graphs/layouts/two-garphs-layout/two-garphs-layout.component';
+import { ThreeGarphsLayoutComponent } from './components/graphs/layouts/three-garphs-layout/three-garphs-layout.component';
+import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garphs-layout/five-garphs-layout.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,12 @@ import { GraphsComponent } from './components/graphs/graphs.component';
     NavbarComponent,
     WeatherForecastComponent,
     MlModelsComponent,
-    GraphsComponent
+    GraphsComponent,
+    LayoutSidebarComponent,
+    FourGarphsLayoutComponent,
+    TwoGarphsLayoutComponent,
+    ThreeGarphsLayoutComponent,
+    FiveGarphsLayoutComponent
   ],
   imports: [
     BrowserModule,
