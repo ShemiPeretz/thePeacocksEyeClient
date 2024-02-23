@@ -21,22 +21,23 @@ const routes: Routes = [
     path: 'models',
     component: MlModelsComponent
   },
-  {
-    path: 'two-graphs',
-    component: TwoGarphsLayoutComponent
-  },
-  {
-    path: 'three-graphs',
-    component: ThreeGarphsLayoutComponent
-  },
-  {
-    path: 'four-graphs',
-    component: FourGarphsLayoutComponent
-  },
-  {
-    path: 'five-graphs',
-    component: FiveGarphsLayoutComponent
-  }];
+  // {
+  //   path: 'two-graphs',
+  //   component: TwoGarphsLayoutComponent
+  // },
+  // {
+  //   path: 'three-graphs',
+  //   component: ThreeGarphsLayoutComponent
+  // },
+  // {
+  //   path: 'four-graphs',
+  //   component: FourGarphsLayoutComponent
+  // },
+  // {
+  //   path: 'five-graphs',
+  //   component: FiveGarphsLayoutComponent
+  // }
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {DashboardLayout} from "../../../enums/dashboard-layout";
 
 @Component({
   selector: 'app-layout-sidebar',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './layout-sidebar.component.scss'
 })
 export class LayoutSidebarComponent {
-
+  layoutEnum = DashboardLayout;
+  @Output() myLayout = new EventEmitter<DashboardLayout>();
+  constructor() {
+  }
+  changeLayout(layout: DashboardLayout) {
+    this.myLayout.emit(layout);
+  }
 }
