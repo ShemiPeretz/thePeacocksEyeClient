@@ -1,11 +1,9 @@
-<div class="background">
-  <app-layout-sidebar (myLayout)="changeLayout($event)"></app-layout-sidebar>
-  <div class="main">
-    <p>graphs works!</p>
-<!--    <router-outlet></router-outlet>-->
+<div class="main">
+
+<app-layout-sidebar (myLayout)="changeLayout($event)" [chosenLayout]="chosenLayout"></app-layout-sidebar>
     <app-two-garphs-layout *ngIf="chosenLayout==dashboardLayoutsEnum.two"></app-two-garphs-layout>
     <app-three-garphs-layout *ngIf="chosenLayout==dashboardLayoutsEnum.three"></app-three-garphs-layout>
     <app-four-garphs-layout *ngIf="chosenLayout==dashboardLayoutsEnum.four"></app-four-garphs-layout>
     <app-five-garphs-layout *ngIf="chosenLayout==dashboardLayoutsEnum.five"></app-five-garphs-layout>
-  </div>
+
 </div>

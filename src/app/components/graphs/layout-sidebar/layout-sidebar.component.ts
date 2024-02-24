@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DashboardLayout} from "../../../enums/dashboard-layout";
 
 @Component({
@@ -8,10 +8,12 @@ import {DashboardLayout} from "../../../enums/dashboard-layout";
 })
 export class LayoutSidebarComponent {
   layoutEnum = DashboardLayout;
+  @Input() chosenLayout!:DashboardLayout;
   @Output() myLayout = new EventEmitter<DashboardLayout>();
   constructor() {
   }
   changeLayout(layout: DashboardLayout) {
     this.myLayout.emit(layout);
+    this.chosenLayout=layout;
   }
 }

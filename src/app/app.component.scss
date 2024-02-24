@@ -1,5 +1,5 @@
 .container {
-  background-image: url("../assets/img/1111898.jpg");
+  background-image: url("../assets/img/pexels-stephan-seeber-1261728.jpg");
   //   background-color: black;
   background-size: cover;
 }
@@ -17,4 +17,9 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+router-outlet{
+  height: calc(100vh - 51px);
+  //width: 100vw;
 }
