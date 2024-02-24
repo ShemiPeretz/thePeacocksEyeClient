@@ -18,6 +18,7 @@ import { FourGarphsLayoutComponent } from './components/graphs/layouts/four-garp
 import { TwoGarphsLayoutComponent } from './components/graphs/layouts/two-garphs-layout/two-garphs-layout.component';
 import { ThreeGarphsLayoutComponent } from './components/graphs/layouts/three-garphs-layout/three-garphs-layout.component';
 import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garphs-layout/five-garphs-layout.component';
+import { TranslatePipePipe } from './translate-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garp
     FourGarphsLayoutComponent,
     TwoGarphsLayoutComponent,
     ThreeGarphsLayoutComponent,
-    FiveGarphsLayoutComponent
+    FiveGarphsLayoutComponent,
+    TranslatePipePipe
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garp
     HttpClientModule,
     FormsModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [
     provideClientHydration(),

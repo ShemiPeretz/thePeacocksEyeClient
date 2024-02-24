@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { DataService } from '../../data.service';
 
 
@@ -18,9 +18,9 @@ enum CardinalDirection {
   templateUrl: './weather-forecast.component.html',
   styleUrl: './weather-forecast.component.scss'
 })
-export class WeatherForecastComponent {
+export class WeatherForecastComponent implements OnInit{
   allSites: string[] = [];
-  selectedSite: string = 'Beer-Sheva';
+  selectedSite!: string ;
   temperature: Number = 0; // [celsius]
   humidity: Number = 0; // [percent]
   windSpeed: Number = 0; // [km/h]
@@ -28,14 +28,15 @@ export class WeatherForecastComponent {
   uv: Number = 0; // [percent??]
 
   isTest: boolean = true;
-  
+
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     // this.dataService.getAllSites().subscribe(data => {
     //   this.sites = data.sites;
     // });
-    this.allSites = ['Beer-Sheva', 'Haifa'];
+    this.allSites = ['Beer Sheva', 'Haifa'];
+    this.selectedSite=this.allSites[0];
     this.getCurrentWeatherForSite();
   }
 
@@ -46,7 +47,7 @@ export class WeatherForecastComponent {
       this.humidity = mockData.humidity;
       this.windSpeed = mockData.windSpeed;
       this.windDirection = mockData.windDirection;
-      this.uv = mockData.uv;   
+      this.uv = mockData.uv;
       return;
     }
     this.dataService.getCurrentWeatherForSite(this.selectedSite).subscribe(data => {
@@ -82,7 +83,7 @@ export class WeatherForecastComponent {
         mockData["uv"] = 3;
         break;
     }
-    return mockData;       
+    return mockData;
   }
 
   onDropdownChange(event: any) {

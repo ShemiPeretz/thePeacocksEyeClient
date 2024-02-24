@@ -1,5 +1,5 @@
 <div class="current-weather" dir="rtl">
-  <h2>Current Weather</h2>
+  <h2>{{ 'Weather Summary' | translate}}</h2>
   <div class="dropdown">
     <!-- <mat-select (valueChange)="onDropdownChange($event)" (selectionChange)="onDropdownChange($event)"> -->
     <mat-select
@@ -7,15 +7,15 @@
       (selectionChange)="onDropdownChange($event)"
     >
       <mat-option *ngFor="let site of allSites" [value]="site">
-        {{ site }}
+        {{ site | translate }}
       </mat-option>
     </mat-select>
   </div>
   <div class="weather-info">
     <div class="temperature">{{ temperature }}°C</div>
-    <div class="wind-speed">Wind Speed: {{ windSpeed }} m/s</div>
-    <div class="wind-direction">Wind Direction: {{ windDirection }}</div>
-    <div class="uv-level">UV Level: {{ uv }}</div>
-    <div class="humidity">Humidity: {{ humidity }}%</div>
+    <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
+    <div class="wind-direction">{{ 'Wind Direction' | translate }}: {{ windDirection }}</div>
+    <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
+    <div class="humidity">{{ 'Humidity' | translate}}: {{ humidity }}%</div>
   </div>
 </div>
