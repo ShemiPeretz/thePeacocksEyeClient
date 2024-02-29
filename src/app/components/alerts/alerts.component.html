@@ -1,0 +1,9 @@
+<div class="alerts">
+  <h2 class="title">{{"Severe Weather Alerts" | translate}}</h2>
+  <div class="alerts-list">
+    <div class="alert" *ngFor="let alert of alerts">
+        <h3>{{ alert.title }}</h3>
+        <p>{{ alert.description }}</p>
+    </div>
+  </div>
+</div>

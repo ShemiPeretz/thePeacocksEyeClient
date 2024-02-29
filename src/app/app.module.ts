@@ -19,6 +19,7 @@ import { TwoGarphsLayoutComponent } from './components/graphs/layouts/two-garphs
 import { ThreeGarphsLayoutComponent } from './components/graphs/layouts/three-garphs-layout/three-garphs-layout.component';
 import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garphs-layout/five-garphs-layout.component';
 import { TranslatePipePipe } from './translate-pipe.pipe';
+import { AlertsComponent } from './components/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TranslatePipePipe } from './translate-pipe.pipe';
     TwoGarphsLayoutComponent,
     ThreeGarphsLayoutComponent,
     FiveGarphsLayoutComponent,
-    TranslatePipePipe
+    TranslatePipePipe,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
