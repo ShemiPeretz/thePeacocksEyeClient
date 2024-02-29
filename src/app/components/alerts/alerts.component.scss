@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   width: 20vw;
-  height: 20vh;
+  height: 30vh;
   backdrop-filter: blur(10px);
 }
 
@@ -32,7 +32,7 @@
 
 .alerts-list::-webkit-scrollbar
 {
-  width: 12px;
+  width: 5px;
   background-color: rgb(0 0 0 / 0%);;
 }
 
