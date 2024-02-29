@@ -19,6 +19,8 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 .alerts-list::-webkit-scrollbar-track

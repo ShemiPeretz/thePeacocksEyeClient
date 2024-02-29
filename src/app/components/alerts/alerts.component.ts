@@ -19,11 +19,11 @@ export class AlertsComponent implements OnInit{
       },
       {
         "title": "ALERT 2",
-        "description": "Earthquake alert"
+        "description": "Earthquake alersdfsdjklnfgsdkjfghbsdjklghskej;rghfkasejdhgkasdjhgkasdjgklasedhgdt"
       },
       {
         "title": "ALERT 3",
-        "description": "Severe Heat alert"
+        "description": "Severe Heat alert sdfkgljsdflkgdfkljgsdfjkl;gsdjkl;fgdklsfjglsdkfghsdfhjklgdfhjklgsdjklhfghjkdghjksdf"
       }
     ]
   }
