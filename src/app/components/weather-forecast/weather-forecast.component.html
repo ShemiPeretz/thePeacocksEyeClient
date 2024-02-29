@@ -1,7 +1,5 @@
 <div class="current-weather" dir="rtl">
-  <h2>{{ 'Weather Summary' | translate}}</h2>
   <div class="dropdown">
-    <!-- <mat-select (valueChange)="onDropdownChange($event)" (selectionChange)="onDropdownChange($event)"> -->
     <mat-select
       [(ngModel)]="selectedSite"
       (selectionChange)="onDropdownChange($event)"
