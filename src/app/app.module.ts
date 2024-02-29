@@ -20,6 +20,7 @@ import { ThreeGarphsLayoutComponent } from './components/graphs/layouts/three-ga
 import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garphs-layout/five-garphs-layout.component';
 import { TranslatePipePipe } from './translate-pipe.pipe';
 import { AlertsComponent } from './components/alerts/alerts.component';
+import { WeatherMapComponent } from './components/weather-map/weather-map.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AlertsComponent } from './components/alerts/alerts.component';
     ThreeGarphsLayoutComponent,
     FiveGarphsLayoutComponent,
     TranslatePipePipe,
-    AlertsComponent
+    AlertsComponent,
+    WeatherMapComponent
   ],
   imports: [
     BrowserModule,
