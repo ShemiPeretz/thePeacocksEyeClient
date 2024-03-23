@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,9 +13,14 @@ export class DataService {
     return this.http.get<any>('http://127.0.0.1:8080/get-variable');
   }
 
-  getCurrentWeatherForSite(site: string): Observable<any> {
-    const requestData = { site: site };
-    return this.http.post<any>('http://127.0.0.1:8080/get-current-weather', requestData);
+  getCurrentWeatherForSite(siteId: string): Observable<any> {
+    const requestData = { station: siteId };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   // Add any other headers your server requires
+    //   'Location': "http://localhost:4200"
+    // });
+    return this.http.post<any>('http://127.0.0.1:8080/weather_summery/', requestData);
   }
 
   getAllSites(): Observable<any> {
@@ -26,7 +31,7 @@ export class DataService {
   Returns List of all cities that has an active Temperature sensor.
    */
   getActiveCities(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8080/active-cities');
+    return this.http.get<any>('http://127.0.0.1:8080/active-cities/');
   }
 
   /*

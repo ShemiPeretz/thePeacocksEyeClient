@@ -19,8 +19,8 @@ enum CardinalDirection {
   styleUrl: './weather-forecast.component.scss'
 })
 export class WeatherForecastComponent implements OnInit{
-  allSites: string[] = [];
-  selectedSite!: string ;
+  allSites: any[] = [];
+  selectedSite: { siteId:string,siteName:string } = { siteId:'',siteName:'' };
   temperature: Number = 0; // [celsius]
   humidity: Number = 0; // [percent]
   windSpeed: Number = 0; // [km/h]
@@ -32,55 +32,32 @@ export class WeatherForecastComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataService.getActiveCities().subscribe(data => {
-      this.allSites = this.getAllActiveSitesFromRequest(data);
+      this.allSites = this.processDataToObject(data);
     });
-    this.selectedSite= this.getDefaultSite(this.allSites);
+    this.getDefaultSite();
     this.getCurrentWeatherForSite();
   }
 
-  getAllActiveSitesFromRequest(data: any): string[]{
-    return Object.values(data);
+  processDataToObject(data: any): any[]{
+    let entries: [string, unknown][] = Object.entries(data);
+    const obj: any[] = [];
+    entries.forEach(entry => obj.push({"siteId": entry[0], "siteName": entry[1]}));
+    return obj;
   }
 
-  getDefaultSite(allSites: string[]): string{
-    return allSites.includes('BEER SHEVA') ? 'BEER SHEVA' : allSites[0];
+  getDefaultSite(): void{
+    const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU' || site.siteName === 'BEER SHEVA')
+    this.selectedSite = site ?? this.allSites[0];
   }
 
   getCurrentWeatherForSite(){
-    this.dataService.getCurrentWeatherForSite(this.selectedSite).subscribe(data => {
+    this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
       this.temperature = data.temperature;
       this.humidity = data.humidity;
       this.windSpeed = data.windSpeed;
       this.windDirection = data.windDirection;
       this.uv = data.uv;
     });
-  }
-
-  getCurrentWeatherForSiteTEST(){
-    let mockData = {"temperature": 0,
-                    "humidity": 0,
-                    "windSpeed": 0,
-                    "windDirection": CardinalDirection.North,
-                    "uv": 0
-    };
-    switch(this.selectedSite){
-      case 'Haifa':
-        mockData["temperature"] = 15;
-        mockData["humidity"] = 70;
-        mockData["windSpeed"] = 5;
-        mockData["windDirection"] = CardinalDirection.East;
-        mockData["uv"] = 1;
-        break;
-      case 'Beer-Sheva':
-      default:
-        mockData["temperature"] = 30;
-        mockData["humidity"] = 40;
-        mockData["windSpeed"] = 20;
-        mockData["windDirection"] = CardinalDirection.SouthEast;
-        mockData["uv"] = 3;
-        break;
-    }
-    return mockData;
   }
 
   onDropdownChange(event: any) {

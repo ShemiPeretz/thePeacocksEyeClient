@@ -5,7 +5,7 @@
       (selectionChange)="onDropdownChange($event)"
     >
       <mat-option *ngFor="let site of allSites" [value]="site">
-        {{ site | translate }}
+        {{ site.siteName | translate }}
       </mat-option>
     </mat-select>
   </div>
