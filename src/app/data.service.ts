@@ -10,23 +10,23 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getVariable(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8000/get-variable');
+    return this.http.get<any>('http://127.0.0.1:8080/get-variable');
   }
 
   getCurrentWeatherForSite(site: string): Observable<any> {
     const requestData = { site: site };
-    return this.http.post<any>('http://127.0.0.1:8000/get-current-weather', requestData);
+    return this.http.post<any>('http://127.0.0.1:8080/get-current-weather', requestData);
   }
 
   getAllSites(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8000/get-all-sites');
+    return this.http.get<any>('http://127.0.0.1:8080/get-all-sites');
   }
 
   /*
   Returns List of all cities that has an active Temperature sensor.
    */
-  getActiveSites(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8000/get-acrive-sites');
+  getActiveCities(): Observable<any> {
+    return this.http.get<any>('http://127.0.0.1:8080/active-cities');
   }
 
   /*
@@ -38,21 +38,21 @@ export class DataService {
     const requestData = {
       city: cityId
     };
-    return this.http.get<any>('http://127.0.0.1:8000/get-active-sites');
+    return this.http.get<any>('http://127.0.0.1:8080/get-active-sites');
   }
 
   /*
   Returns List of all active alerts from IMS rss alerts feed
    */
   getWarnings(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8000/get-warnings');
+    return this.http.get<any>('http://127.0.0.1:8080/get-warnings');
   }
 
   /*
   Returns plotly graph object in json format
    */
   getGraph(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8000/get-graph');
+    return this.http.get<any>('http://127.0.0.1:8080/get-graph');
   }
 
 

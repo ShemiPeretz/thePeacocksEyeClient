@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { DataService } from '../../data.service';
+import {DataService} from '../../data.service';
 
 
 enum CardinalDirection {
@@ -27,29 +27,26 @@ export class WeatherForecastComponent implements OnInit{
   windDirection: CardinalDirection = CardinalDirection.East;
   uv: Number = 0; // [percent??]
 
-  isTest: boolean = true;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    // this.dataService.getAllSites().subscribe(data => {
-    //   this.sites = data.sites;
-    // });
-    this.allSites = ['Beer Sheva', 'Haifa'];
-    this.selectedSite=this.allSites[0];
+    this.dataService.getActiveCities().subscribe(data => {
+      this.allSites = this.getAllActiveSitesFromRequest(data);
+    });
+    this.selectedSite= this.getDefaultSite(this.allSites);
     this.getCurrentWeatherForSite();
   }
 
+  getAllActiveSitesFromRequest(data: any): string[]{
+    return Object.values(data);
+  }
+
+  getDefaultSite(allSites: string[]): string{
+    return allSites.includes('BEER SHEVA') ? 'BEER SHEVA' : allSites[0];
+  }
+
   getCurrentWeatherForSite(){
-    if(this.isTest){
-      const mockData = this.getCurrentWeatherForSiteTEST()
-      this.temperature = mockData.temperature;
-      this.humidity = mockData.humidity;
-      this.windSpeed = mockData.windSpeed;
-      this.windDirection = mockData.windDirection;
-      this.uv = mockData.uv;
-      return;
-    }
     this.dataService.getCurrentWeatherForSite(this.selectedSite).subscribe(data => {
       this.temperature = data.temperature;
       this.humidity = data.humidity;
@@ -87,8 +84,7 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   onDropdownChange(event: any) {
-    const newSelectedSite = event.value;
-    this.selectedSite = newSelectedSite;
+    this.selectedSite = event.value;
     this.getCurrentWeatherForSite();
   }
 
