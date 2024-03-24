@@ -7,22 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
 
-  private testMode: boolean = true;
-
   constructor(private http: HttpClient) { }
 
   getVariable(): Observable<any> {
     return this.http.get<any>('http://127.0.0.1:8080/get-variable');
   }
 
-  getCurrentWeatherForSite(siteId: string): Observable<any> | any{
-    if (this.testMode){
-      return {"WS": 15,
-              "WD": 330,
-              "TD": 17.9,
-              "Grad": 4
-              }
-    }
+  getCurrentWeatherForSite(siteId: string): Observable<any> {
     const requestData = { station: siteId };
     return this.http.post<any>('http://127.0.0.1:8080/weather_summery/', requestData);
   }
@@ -34,13 +25,7 @@ export class DataService {
   /*
   Returns List of all cities that has an active Temperature sensor.
    */
-  getActiveCities(): Observable<any> | any {
-    if (this.testMode){
-      return {
-        411: "BEER SHEVA",
-        59: "BEER SHEVA BGU"
-      }
-    }
+  getActiveCities(): Observable<any>{
     return this.http.get<any>('http://127.0.0.1:8080/active-cities/');
   }
 

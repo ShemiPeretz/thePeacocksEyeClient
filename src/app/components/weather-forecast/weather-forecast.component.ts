@@ -25,16 +25,24 @@ export class WeatherForecastComponent implements OnInit{
   temperature: Number = 0; // [celsius]
   humidity: Number = 0; // [percent]
   windSpeed: Number = 0; // [km/h]
-  windDirection: CardinalDirection = CardinalDirection.East;
+  windDirection: Number = 0; // [degrees]
   uv: Number = 0; // [percent??]
 
+  testMode: boolean = true;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.getActiveCities().subscribe(data => {
-      this.allSites = this.processActiveCitiesToSites(data);
-    });
+    if (this.testMode){
+      this.allSites =  [
+        {"siteId": 411,"siteName": "BEER SHEVA"},
+        {"siteId": 59, "siteName": "BEER SHEVA BGU"}
+    ]
+    } else {
+      this.dataService.getActiveCities().subscribe(data => {
+        this.allSites = this.processActiveCitiesToSites(data);
+      });
+    }
     this.getDefaultSite();
     this.getCurrentWeatherForSite();
   }
@@ -52,9 +60,22 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   getCurrentWeatherForSite(){
-    this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
-      this.allSitesData = this.processWeatherSummary(data);
-    });
+    if (this.testMode) {
+      this.allSitesData = {
+        "windSpeed": 15,
+        "windDirection": 330,
+        "temperature": 17.9,
+        "uv": 4
+      }
+      this.temperature  = 17.9
+      this.humidity  = 330
+      this.windSpeed  = 15
+      this.windDirection = 4
+    } else {
+      this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
+        this.allSitesData = this.processWeatherSummary(data);
+      });
+    }
   }
 
   processWeatherSummary(data: any): {}{
