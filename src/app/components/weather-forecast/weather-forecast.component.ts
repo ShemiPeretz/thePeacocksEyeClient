@@ -64,10 +64,10 @@ export class WeatherForecastComponent implements OnInit{
       this.allSitesData = {
         "windSpeed": 15,
         "windDirection": 330,
-        "temperature": 17.9,
+        "temperature": 17,
         "uv": 4
       }
-      this.temperature  = 17.9
+      this.temperature  = 17
       this.humidity  = 330
       this.windSpeed  = 15
       this.windDirection = 4
