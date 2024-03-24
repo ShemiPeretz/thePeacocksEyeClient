@@ -1,4 +1,5 @@
 <div class="current-weather">
+
   <div class="dropdown">
     <mat-select
       [(ngModel)]="selectedSite"
@@ -9,12 +10,18 @@
       </mat-option>
     </mat-select>
   </div>
-  <div class="weather-info">
-    <div class="temperature">{{ temperature }}°C</div>
-    <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
-    <div class="wind-direction">{{ 'Wind Direction' | translate }}: {{ windDirection }}</div>
-    <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
-    <div class="humidity">{{ 'Humidity' | translate}}: {{ humidity }}%</div>
+
+  <div class="row">
+    <div class="temperature">
+      <img ngSrc="assets/img/sun-icon.png" height="100" width="100"/>
+      <div class="temperature-text">{{ temperature }}°</div>
+    </div>
+    <div class="weather-info">
+      <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
+      <div class="wind-direction">{{ 'Wind Direction' | translate }}: {{ windDirection }}</div>
+      <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
+      <div class="humidity">{{ 'Humidity' | translate}}: {{ humidity }}%</div>
+    </div>
   </div>
 </div>
 <app-alerts></app-alerts>

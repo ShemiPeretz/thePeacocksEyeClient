@@ -20,6 +20,7 @@ import { ThreeGarphsLayoutComponent } from './components/graphs/layouts/three-ga
 import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garphs-layout/five-garphs-layout.component';
 import { TranslatePipePipe } from './translate-pipe.pipe';
 import { AlertsComponent } from './components/alerts/alerts.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -36,14 +37,15 @@ import { AlertsComponent } from './components/alerts/alerts.component';
     TranslatePipePipe,
     AlertsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    MatSelectModule,
-    MatIconModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        MatSelectModule,
+        MatIconModule,
+        NgOptimizedImage,
+    ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync()
