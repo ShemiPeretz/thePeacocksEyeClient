@@ -10,11 +10,11 @@
     </mat-select>
   </div>
   <div class="weather-info">
-    <div class="temperature">{{ temperature }}°C</div>
-    <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
-    <div class="wind-direction">{{ 'Wind Direction' | translate }}: {{ windDirection }}</div>
-    <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
-    <div class="humidity">{{ 'Humidity' | translate}}: {{ humidity }}%</div>
+    <div class="temperature">{{ allSitesData["temperature"] }}°C</div>
+    <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ allSitesData["windSpeed"] }} {{ 'm/s' | translate }}</div>
+    <div class="wind-direction">{{ 'Wind Direction' | translate }}: {{ allSitesData["windDirection"] }}</div>
+    <div class="uv-level">{{ 'UV Level' | translate }}: {{ allSitesData["uv"] }}</div>
+    <div class="humidity">{{ 'Humidity' | translate}}: {{ allSitesData["humidity"] }}%</div>
   </div>
 </div>
 <app-alerts></app-alerts>

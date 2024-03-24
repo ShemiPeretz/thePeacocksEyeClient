@@ -20,6 +20,7 @@ enum CardinalDirection {
 })
 export class WeatherForecastComponent implements OnInit{
   allSites: any[] = [];
+  allSitesData: {} = {};
   selectedSite: { siteId:string,siteName:string } = { siteId:'',siteName:'' };
   temperature: Number = 0; // [celsius]
   humidity: Number = 0; // [percent]
@@ -32,13 +33,13 @@ export class WeatherForecastComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataService.getActiveCities().subscribe(data => {
-      this.allSites = this.processDataToObject(data);
+      this.allSites = this.processActiveCitiesToSites(data);
     });
     this.getDefaultSite();
     this.getCurrentWeatherForSite();
   }
 
-  processDataToObject(data: any): any[]{
+  processActiveCitiesToSites(data: any): any[]{
     let entries: [string, unknown][] = Object.entries(data);
     const obj: any[] = [];
     entries.forEach(entry => obj.push({"siteId": entry[0], "siteName": entry[1]}));
@@ -52,13 +53,33 @@ export class WeatherForecastComponent implements OnInit{
 
   getCurrentWeatherForSite(){
     this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
-      this.temperature = data.temperature;
-      this.humidity = data.humidity;
-      this.windSpeed = data.windSpeed;
-      this.windDirection = data.windDirection;
-      this.uv = data.uv;
+      this.allSitesData = this.processWeatherSummary(data);
     });
   }
+
+  processWeatherSummary(data: any): {}{
+    const obj: any = {};
+    let entries: [string, unknown][] = Object.entries(data);
+    for (const entry of entries) switch (entry[0]) {
+      case "TD":
+        obj["temperature"] =  entry[1];
+        break;
+      case "RH":
+        obj["humidity"] =  entry[1];
+        break;
+      case "WS":
+        obj["windSpeed"] =  entry[1];
+        break;
+      case "WD":
+        obj["windDirection"] =  entry[1];
+        break;
+      case "Grad":
+        obj["uv"] =  entry[1];
+        break;
+    }
+    return obj
+  }
+
 
   onDropdownChange(event: any) {
     this.selectedSite = event.value;
