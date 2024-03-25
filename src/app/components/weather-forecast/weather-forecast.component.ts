@@ -29,7 +29,7 @@ export class WeatherForecastComponent implements OnInit{
   minTemp: number = 0; // [celsius]
   rain: number = 0; // [ml]
   pressure: number = 0; // [hPa]
-  weatherCondition: WeatherCondition = WeatherCondition.windy;
+  weatherCondition: WeatherCondition = WeatherCondition.sunny;
 
   testMode: boolean = true;
 
@@ -151,4 +151,25 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   protected readonly WeatherCondition = WeatherCondition;
+
+  getBackgroundImage(): string {
+    switch (this.weatherCondition){
+      case WeatherCondition.sunny:
+        return 'url(/assets/img/sunny-sky2.jpg)'
+      case WeatherCondition.cloudy:
+        return 'url(/assets/img/dark-clouds.jpg)';
+      case WeatherCondition.partly_cloudy:
+        return 'url(/assets/img/partly-cloudy2.jpg)';
+      case WeatherCondition.rainy:
+        return 'url(/assets/img/rainy.jpg)';
+      case WeatherCondition.snowy:
+        return 'url(/assets/img/snow.jpg)';
+      case WeatherCondition.windy:
+        return 'url(/assets/img/sunny-sky.jpg)'
+      case WeatherCondition.foggy:
+        return 'url(/assets/img/fog.jpg)'
+      default:
+        return 'url(/assets/img/sunny-sky.jpg)';
+    }
+  }
 }

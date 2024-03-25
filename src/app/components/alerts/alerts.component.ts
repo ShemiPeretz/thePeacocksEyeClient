@@ -30,7 +30,7 @@ export class AlertsComponent implements OnInit{
     //     "description": "Severe Heat alert sdfkgljsdflkgdfkljgsdfjkl;gsdjkl;fgdklsfjglsdkfghsdfhjklgdfhjklgsdjklhfghjkdghjksdf"
     //   }
     // ]
-    this.noAlerts = false;
+    // this.noAlerts = false;
   }
 
   parseRssFeed(): void {
