@@ -49,9 +49,10 @@
 
 .row{
   margin-top: 10vh;
+  margin-left: 3vw;
   display: flex;
   flex-direction: row;
-  gap: 3vw;
+  gap: 5vw;
 }
 
 .temperature{
@@ -68,7 +69,12 @@
 .weather-info{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   font-size: large;
   gap: 1vh;
+}
+
+.humidity, .wind-speed, .wind-direction, .max-temp, .min-temp, .rain{
+  padding-bottom: 15px;
+  border-bottom: 1px solid #B8B8B8;
 }

@@ -1,16 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from '../../data.service';
 
-
-enum CardinalDirection {
-  North,
-  NorthEast,
-  East,
-  SouthEast,
-  South,
-  SouthWest,
-  West,
-  NorthWest
+export enum WeatherCondition{
+  sunny,
+  cloudy,
+  partly_cloudy,
+  rainy,
+  windy,
+  snowy,
+  foggy
 }
 
 @Component({
@@ -22,11 +20,16 @@ export class WeatherForecastComponent implements OnInit{
   allSites: any[] = [];
   allSitesData: {} = {};
   selectedSite: { siteId:string,siteName:string } = { siteId:'',siteName:'' };
-  temperature: Number = 0; // [celsius]
-  humidity: Number = 0; // [percent]
-  windSpeed: Number = 0; // [km/h]
-  windDirection: Number = 0; // [degrees]
-  uv: Number = 0; // [percent??]
+  temperature: number = 0; // [celsius]
+  humidity: number = 0; // [percent]
+  windSpeed: number = 0; // [km/h]
+  windDirection: number = 0; // [degrees]
+  uv: number = 0; // [percent??]
+  maxTemp: number = 0; // [celsius]
+  minTemp: number = 0; // [celsius]
+  rain: number = 0; // [ml]
+  pressure: number = 0; // [hPa]
+  weatherCondition: WeatherCondition = WeatherCondition.windy;
 
   testMode: boolean = true;
 
@@ -45,6 +48,8 @@ export class WeatherForecastComponent implements OnInit{
     }
     this.getDefaultSite();
     this.getCurrentWeatherForSite();
+    // TODO - uncomment when real data is streaming
+    // this.weatherCondition = this.calculateWeatherCondition();
   }
 
   processActiveCitiesToSites(data: any): any[]{
@@ -66,12 +71,16 @@ export class WeatherForecastComponent implements OnInit{
         "windDirection": 330,
         "temperature": 17,
         "uv": 4
-      }
-      this.temperature  = 17
-      this.humidity  = 47
-      this.windSpeed  = 15
-      this.windDirection = 330
-      this.uv = 4
+      };
+      this.temperature  = 17;
+      this.humidity  = 47;
+      this.windSpeed  = 15;
+      this.windDirection = 330;
+      this.uv = 4;
+      this.maxTemp = 21;
+      this.minTemp = 8;
+      this.rain = 0;
+      this.pressure = 1012;
     } else {
       this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
         this.allSitesData = this.processWeatherSummary(data);
@@ -98,6 +107,18 @@ export class WeatherForecastComponent implements OnInit{
       case "Grad":
         obj["uv"] =  entry[1];
         break;
+      case "TDmax":
+        obj["maxTemp"] =  entry[1];
+        break;
+      case "TDmin":
+        obj["minTemp"] =  entry[1];
+        break;
+      case "Rain":
+        obj["rain"] =  entry[1];
+        break;
+      case "BP":
+        obj["pressure"] =  entry[1];
+        break;
     }
     return obj
   }
@@ -108,8 +129,26 @@ export class WeatherForecastComponent implements OnInit{
     this.getCurrentWeatherForSite();
   }
 
-  getRotation(): string {
+  getWindArrowRotation(): string {
     return `rotate(${this.windDirection}deg)`;
   }
 
+  calculateWeatherCondition(): WeatherCondition {
+    if (this.rain > 0.5){
+      return WeatherCondition.rainy;
+    }
+    if (this.temperature <= 0){
+      return WeatherCondition.snowy;
+    }
+    if (this.humidity > 90){
+      return WeatherCondition.foggy;
+    }
+    if (this.windSpeed > 25){
+      return WeatherCondition.windy;
+    }
+    // TODO: ADD CLOUDY RELEVANT WEATHER INFO
+    return WeatherCondition.sunny;
+  }
+
+  protected readonly WeatherCondition = WeatherCondition;
 }

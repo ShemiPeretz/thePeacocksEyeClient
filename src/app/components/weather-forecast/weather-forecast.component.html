@@ -14,17 +14,51 @@
 
   <div class="row">
     <div class="temperature">
-      <img ngSrc="assets/img/sun-icon.png" height="100" width="100"/>
+      <ng-container [ngSwitch]="weatherCondition">
+        <img *ngSwitchCase="WeatherCondition.sunny" ngSrc="assets/img/sun-icon.png" height="128" width="128" alt="Sunny">
+        <img *ngSwitchCase="WeatherCondition.partly_cloudy" ngSrc="assets/img/partly-cloudy.png" height="128" width="128" alt="Partly Cloudy">
+        <img *ngSwitchCase="WeatherCondition.cloudy" ngSrc="assets/img/clouds.png" height="128" width="128" alt="Cloudy">
+        <img *ngSwitchCase="WeatherCondition.rainy" ngSrc="assets/img/rain-clouds.png" height="128" width="128" alt="Rainy">
+        <img *ngSwitchCase="WeatherCondition.windy" ngSrc="assets/img/windy.png" height="128" width="128" alt="Windy">
+        <img *ngSwitchCase="WeatherCondition.snowy" ngSrc="assets/img/snowy.png" height="128" width="128" alt="Snowy">
+        <img *ngSwitchCase="WeatherCondition.foggy" ngSrc="assets/img/fog-clouds.png" height="128" width="128" alt="Foggy">
+      </ng-container>
       <div class="temperature-text">{{ temperature }}°</div>
     </div>
     <div class="weather-info">
-      <div class="humidity">{{ 'Humidity' | translate}}: {{ humidity }}%</div>
-      <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
-      <div class="wind-direction">{{ 'Wind Direction' | translate }}:
-        <mat-icon [style.transform]="getRotation()">arrow_forward</mat-icon></div>
-      <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
-
+      <div class="humidity">
+        <mat-icon>water_drop</mat-icon>
+        {{ 'Humidity'}}: {{ humidity }}%
+      </div>
+      <div class="wind-speed">
+        <mat-icon>air</mat-icon>
+        {{ 'Wind Speed'}}: {{ windSpeed }} {{ 'km/h' | translate }}
+      </div>
+      <div class="wind-direction">
+        <mat-icon>explore</mat-icon>
+        {{ 'Wind Direction' }}:
+        <mat-icon [style.transform]="getWindArrowRotation()">arrow_forward</mat-icon>
+      </div>
+      <div class="uv-level">
+        <mat-icon>flare</mat-icon>
+        {{'UV Index'}}: {{ uv }}</div>
     </div>
+    <div class="weather-info">
+      <div class="max-temp">
+        <mat-icon>add</mat-icon>
+        {{ 'Max temperature'}}: {{ humidity }}°
+      </div>
+      <div class="min-temp">
+        <mat-icon>remove</mat-icon>
+        {{ 'Min temperature'}}: {{ humidity }}°</div>
+      <div class="rain">
+        <mat-icon>thunderstorm</mat-icon>
+        {{ 'Rain'}}: {{ humidity }}°</div>
+      <div class="pressure">
+        <mat-icon>compare_arrows</mat-icon>
+        {{ 'Pressure'}}: {{ humidity }} hPa</div>
+    </div>
+
   </div>
 </div>
 <app-alerts></app-alerts>
