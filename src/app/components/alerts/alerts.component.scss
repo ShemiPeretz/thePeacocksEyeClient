@@ -4,7 +4,6 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 20vw;
   height: 30vh;
   backdrop-filter: blur(10px);
@@ -14,6 +13,14 @@
 .title{
   display: flex;
   justify-content: center;
+  color: #333333;
+  font-size: x-large;
+}
+
+.no-alerts{
+  display: flex;
+  justify-content: center;
+  color: #333333;
 }
 
 .alerts-list{
