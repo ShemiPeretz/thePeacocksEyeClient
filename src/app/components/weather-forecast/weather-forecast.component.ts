@@ -68,9 +68,10 @@ export class WeatherForecastComponent implements OnInit{
         "uv": 4
       }
       this.temperature  = 17
-      this.humidity  = 330
+      this.humidity  = 47
       this.windSpeed  = 15
-      this.windDirection = 4
+      this.windDirection = 330
+      this.uv = 4
     } else {
       this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
         this.allSitesData = this.processWeatherSummary(data);
@@ -105,6 +106,10 @@ export class WeatherForecastComponent implements OnInit{
   onDropdownChange(event: any) {
     this.selectedSite = event.value;
     this.getCurrentWeatherForSite();
+  }
+
+  getRotation(): string {
+    return `rotate(${this.windDirection}deg)`;
   }
 
 }

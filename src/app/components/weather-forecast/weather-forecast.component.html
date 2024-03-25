@@ -1,6 +1,7 @@
 <div class="current-weather">
 
   <div class="dropdown">
+    <mat-icon> location_on</mat-icon>
     <mat-select
       [(ngModel)]="selectedSite"
       (selectionChange)="onDropdownChange($event)"
@@ -17,10 +18,12 @@
       <div class="temperature-text">{{ temperature }}°</div>
     </div>
     <div class="weather-info">
-      <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
-      <div class="wind-direction">{{ 'Wind Direction' | translate }}: {{ windDirection }}</div>
-      <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
       <div class="humidity">{{ 'Humidity' | translate}}: {{ humidity }}%</div>
+      <div class="wind-speed">{{ 'Wind Speed' | translate }}: {{ windSpeed }} {{ 'm/s' | translate }}</div>
+      <div class="wind-direction">{{ 'Wind Direction' | translate }}:
+        <mat-icon [style.transform]="getRotation()">arrow_forward</mat-icon></div>
+      <div class="uv-level">{{ 'UV Level' | translate }}: {{ uv }}</div>
+
     </div>
   </div>
 </div>
