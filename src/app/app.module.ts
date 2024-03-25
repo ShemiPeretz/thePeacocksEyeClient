@@ -21,6 +21,7 @@ import { FiveGarphsLayoutComponent } from './components/graphs/layouts/five-garp
 import { TranslatePipePipe } from './translate-pipe.pipe';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import {NgOptimizedImage} from "@angular/common";
+import {MapComponent} from "./components/map/map.component";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {NgOptimizedImage} from "@angular/common";
     ThreeGarphsLayoutComponent,
     FiveGarphsLayoutComponent,
     TranslatePipePipe,
-    AlertsComponent
+    AlertsComponent,
+    MapComponent
   ],
     imports: [
         BrowserModule,
