@@ -15,22 +15,22 @@ export class AlertsComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.parseRssFeed();
-    // this.alerts = [
-    //   {
-    //   "title": "ALERT 1",
-    //   "description": "Flood alert"
-    //   },
-    //   {
-    //     "title": "ALERT 2",
-    //     "description": "Earthquake alersdfsdjklnfgsdkjfghbsdjklghskej;rghfkasejdhgkasdjhgkasdjgklasedhgdt"
-    //   },
-    //   {
-    //     "title": "ALERT 3",
-    //     "description": "Severe Heat alert sdfkgljsdflkgdfkljgsdfjkl;gsdjkl;fgdklsfjglsdkfghsdfhjklgdfhjklgsdjklhfghjkdghjksdf"
-    //   }
-    // ]
-    // this.noAlerts = false;
+    // this.parseRssFeed();
+    this.alerts = [
+      {
+      "title": "ALERT 1",
+      "description": "Flood alert"
+      },
+      {
+        "title": "ALERT 2",
+        "description": "Earthquake alersdfsdjklnfgsdkjfghbsdjklghskej;rghfkasejdhgkasdjhgkasdjgklasedhgdt"
+      },
+      {
+        "title": "ALERT 3",
+        "description": "Severe Heat alert sdfkgljsdflkgdfkljgsdfjkl;gsdjkl;fgdklsfjglsdkfghsdfhjklgdfhjklgsdjklhfghjkdghjksdf"
+      }
+    ]
+    this.noAlerts = false;
   }
 
   parseRssFeed(): void {
