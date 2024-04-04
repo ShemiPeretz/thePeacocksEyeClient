@@ -38,8 +38,15 @@ export class WeatherForecastComponent implements OnInit{
   ngOnInit(): void {
     if (this.testMode){
       this.allSites =  [
-        {"siteId": 411,"siteName": "BEER SHEVA"},
-        {"siteId": 59, "siteName": "BEER SHEVA BGU"}
+        {"siteId": 411,"siteName": "BEER SHEVA BGU"},
+        {"siteId": 178, "siteName": "TEL AVIV"},
+        {"siteId": 23, "siteName": "JERUSALEM"},
+        {"siteId": 42, "siteName": "HAIFA"},
+        {"siteId": 124, "siteName": "ASHDOD"},
+        {"siteId": 208, "siteName": "ASHKELON"},
+        {"siteId": 10, "siteName": "MAROM GOLAN"},
+        {"siteId": 54, "siteName": "BEIT DAGAN"},
+        {"siteId": 64, "siteName": "EILAT"},
     ]
     } else {
       this.dataService.getActiveCities().subscribe(data => {
@@ -72,20 +79,22 @@ export class WeatherForecastComponent implements OnInit{
         "temperature": 17,
         "uv": 4
       };
-      this.temperature  = 17;
-      this.humidity  = 47;
-      this.windSpeed  = 15;
-      this.windDirection = 330;
-      this.uv = 4;
-      this.maxTemp = 21;
-      this.minTemp = 8;
-      this.rain = 0;
-      this.pressure = 1012;
+      const demoData = this.getDemoData();
+      this.temperature  = demoData[this.selectedSite.siteName]['TD'];
+      this.humidity  = demoData[this.selectedSite.siteName]['RH'];
+      this.windSpeed  = demoData[this.selectedSite.siteName]['WS'];
+      this.windDirection = demoData[this.selectedSite.siteName]['WD'];
+      this.uv = demoData[this.selectedSite.siteName]['Grad'];
+      this.maxTemp = demoData[this.selectedSite.siteName]['TDmax'];
+      this.minTemp = demoData[this.selectedSite.siteName]['TDmin'];
+      this.rain = demoData[this.selectedSite.siteName]['Rain'];
+      this.pressure = demoData[this.selectedSite.siteName]['BP'];
     } else {
       this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
         this.allSitesData = this.processWeatherSummary(data);
       });
     }
+    this.calculateWeatherCondition()
   }
 
   processWeatherSummary(data: any): {}{
@@ -130,27 +139,27 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   getWindArrowRotation(): string {
-    return `rotate(${this.windDirection}deg)`;
+    return `rotate(${this.windDirection - 90}deg)`;
   }
 
   calculateWeatherCondition(): WeatherCondition {
     if (this.rain > 0.5){
-      return WeatherCondition.rainy;
+      this.weatherCondition =  WeatherCondition.rainy;
     }
     if (this.temperature <= 0){
-      return WeatherCondition.snowy;
+      this.weatherCondition = WeatherCondition.snowy;
     }
-    if (this.humidity > 90){
-      return WeatherCondition.foggy;
+    if (this.humidity > 80){
+      this.weatherCondition = WeatherCondition.foggy;
     }
     if (this.windSpeed > 25){
-      return WeatherCondition.windy;
+      this.weatherCondition = WeatherCondition.windy;
     }
     // TODO: ADD CLOUDY RELEVANT WEATHER INFO
     return WeatherCondition.sunny;
   }
 
-  protected readonly WeatherCondition = WeatherCondition;
+  // protected WeatherCondition = WeatherCondition;
 
   getBackgroundImage(): string {
     switch (this.weatherCondition){
@@ -172,4 +181,63 @@ export class WeatherForecastComponent implements OnInit{
         return 'url(/assets/img/sunny-sky.jpg)';
     }
   }
+
+  getDemoData(): any{
+    let result: any = {};
+    result = {
+      "BEER SHEVA BGU": {
+        "Rain": 0,
+        "WS": 1.7,
+        "WD": 113,
+        "TD": 20,
+        "RH": 35,
+        "TDmax": 21,
+        "TDmin": 20,
+        "BP": 980,
+        "Grad": 8
+      },
+      "TEL AVIV": {
+        "Rain": 0,
+        "WS": 3,
+        "WD": 254,
+        "TD": 16,
+        "RH": 89,
+        "TDmax": 17,
+        "TDmin": 16,
+        "BP": "-",
+        "Grad": 7
+
+      },
+      "JERUSALEM": {
+        "Rain": 0,
+        "WS": 1.9,
+        "WD": 349,
+        "TD": 22,
+        "TDmax": 22,
+        "TDmin": 21,
+        "BP": 924,
+        "RH": 20,
+        "Grad": 7
+      },
+      "HAIFA":{
+        "Rain": 0,
+        "WS": 3.1,
+        "WD": 237,
+        "TD": 20,
+        "RH": 47,
+        "TDmax": 20,
+        "TDmin": 20,
+        "Grad": 7
+      },
+      "ASHDOD":{},
+      "ASHKELON":{},
+      "MAROM GOLAN":{},
+      "BEIT DAGAN":{},
+      "EILAT": {},
+    }
+
+    return result
+  }
+
+  protected readonly WeatherCondition = WeatherCondition;
 }

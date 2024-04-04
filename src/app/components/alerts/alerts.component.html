@@ -1,4 +1,4 @@
-<div class="alerts">
+<div [ngStyle]="{'background': getBackgroundColorByLevel()}" class="alerts">
   <h2 class="title">{{"Severe Weather Alerts" | translate}}</h2>
   <div *ngIf="!noAlerts" class="alerts-list">
     <div class="alert" *ngFor="let alert of alerts">

@@ -2,6 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import { parseString } from 'xml2js';
 import { HttpClient } from '@angular/common/http';
 
+export enum AlertLevel{
+  High,
+  Medium,
+  Low
+}
+
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
@@ -10,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 export class AlertsComponent implements OnInit{
   alerts: any[] = [];
   noAlerts: boolean = true;
+  alertLevel: AlertLevel = AlertLevel.Medium;
 
   constructor(private http: HttpClient) {
   }
@@ -59,6 +66,18 @@ export class AlertsComponent implements OnInit{
 
   removeHtmlTags(str: string): string {
     return str.replace(/<[^>]*>/g, '').replace("update: ", '');
+  }
+
+  getBackgroundColorByLevel(): string{
+    switch (this.alertLevel){
+      case AlertLevel.High:
+        return 'rgb(236 112 99 / 65%)'
+      case AlertLevel.Medium:
+        return 'rgba(255,144,0,0.65)'
+      case AlertLevel.Low:
+      default:
+        return 'rgba(255,227,0,0.65)'
+    }
   }
 
 }
