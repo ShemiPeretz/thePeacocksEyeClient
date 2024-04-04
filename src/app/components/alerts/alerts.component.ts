@@ -29,14 +29,6 @@ export class AlertsComponent implements OnInit{
       "description": "severe Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 26/03 from 10 until 22 LT.\
       The state of sea is Slight to Moderate. The significant wave height from 120 to 180 cm, increasing. The hazardous\
       weather conditions may continue after the warning will expire. if needed, the warning will be extended"
-      },
-      {
-        "title": "ALERT 2",
-        "description": "Earthquake alersdfsdjklnfgsdkjfghbsdjklghskej;rghfkasejdhgkasdjhgkasdjgklasedhgdt"
-      },
-      {
-        "title": "ALERT 3",
-        "description": "Severe Heat alert sdfkgljsdflkgdfkljgsdfjkl;gsdjkl;fgdklsfjglsdkfghsdfhjklgdfhjklgsdjklhfghjkdghjksdf"
       }
     ]
     this.noAlerts = false;
