@@ -10,6 +10,8 @@ export class LayoutSidebarComponent {
   layoutEnum = DashboardLayout;
   @Input() chosenLayout!:DashboardLayout;
   @Output() myLayout = new EventEmitter<DashboardLayout>();
+  testMode: boolean = true;
+
   constructor() {
   }
   changeLayout(layout: DashboardLayout) {
