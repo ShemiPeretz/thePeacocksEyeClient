@@ -1,0 +1,32 @@
+<div class="air-quality">
+  <h2 class="title">{{"Air Quality"}}</h2>
+  <div class="data">
+    <div class="index">
+      <h2 class="level-desc">{{airQualityLevel}}</h2>
+      <div [ngStyle]="{'background': getBackgroundColorByLevel()}" class="level">
+        !
+      </div>
+    </div>
+    <div class="pollutants">
+      <div class="pm2.5 poll">
+        {{pm2}}
+        <h1 class="poll-type">PM2.5</h1>
+      </div>
+      <div class="pm10 poll">
+        {{pm10}}
+        <h1 class="poll-type">PM10</h1>
+      </div>
+      <div class="n02 poll">
+        {{no2}}
+        <h1 class="poll-type">NO2</h1>
+      </div>
+      <div class="o3 poll">
+        {{o3}}
+        <h1 class="poll-type">O3</h1>
+      </div>
+    </div>
+  </div>
+  <div class="description">
+    {{ airQualityDescription }}
+  </div>
+</div>

@@ -78,7 +78,7 @@ export class AlertsComponent implements OnInit{
       case AlertLevel.High:
         return 'rgb(236 112 99 / 65%)'
       case AlertLevel.Medium:
-        return 'rgba(255,144,0,0.65)'
+        return '#EB984E'
       case AlertLevel.Low:
       default:
         return 'rgba(255,227,0,0.65)'
