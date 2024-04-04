@@ -78,3 +78,9 @@
   padding-bottom: 15px;
   border-bottom: 1px solid #B8B8B8;
 }
+
+.widgets{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

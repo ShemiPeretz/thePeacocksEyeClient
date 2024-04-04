@@ -149,7 +149,7 @@ export class WeatherForecastComponent implements OnInit{
     if (this.temperature <= 0){
       this.weatherCondition = WeatherCondition.snowy;
     }
-    if (this.humidity > 80){
+    if (this.humidity > 90){
       this.weatherCondition = WeatherCondition.foggy;
     }
     if (this.windSpeed > 25){
@@ -204,9 +204,8 @@ export class WeatherForecastComponent implements OnInit{
         "RH": 89,
         "TDmax": 17,
         "TDmin": 16,
-        "BP": "-",
+        "BP": "--",
         "Grad": 7
-
       },
       "JERUSALEM": {
         "Rain": 0,
@@ -229,9 +228,39 @@ export class WeatherForecastComponent implements OnInit{
         "TDmin": 20,
         "Grad": 7
       },
-      "ASHDOD":{},
-      "ASHKELON":{},
-      "MAROM GOLAN":{},
+      "ASHDOD":{
+        "Rain": 0,
+        "WS": 1.2,
+        "WD": 233,
+        "TD": 18,
+        "RH": 89,
+        "TDmax": 18,
+        "TDmin": 18,
+        "BP": "--",
+        "Grad": 7
+      },
+      "ASHKELON":{
+        "Rain": 0,
+        "WS": 2,
+        "WD": 305,
+        "TD": 18,
+        "RH": 92,
+        "TDmax": 18,
+        "TDmin": 18,
+        "BP": "--",
+        "Grad": 7
+      },
+      "MAROM GOLAN":{
+        "Rain": 0.0,
+        "WS": 5.3,
+        "WD": 288.0,
+        "RH": 31.0,
+        "TD": 22.9,
+        "TDmax": 23.2,
+        "TDmin": 22.7,
+        "BP": 969.0,
+        "Grad": 6
+      },
       "BEIT DAGAN":{},
       "EILAT": {},
     }
