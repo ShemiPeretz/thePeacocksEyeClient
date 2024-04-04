@@ -22,11 +22,13 @@ export class AlertsComponent implements OnInit{
   }
 
   ngOnInit() {
-    // this.parseRssFeed();
+    this.parseRssFeed();
     this.alerts = [
       {
-      "title": "ALERT 1",
-      "description": "Flood alert"
+      "title": "High Sea swimming danger",
+      "description": "severe Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 26/03 from 10 until 22 LT.\
+      The state of sea is Slight to Moderate. The significant wave height from 120 to 180 cm, increasing. The hazardous\
+      weather conditions may continue after the warning will expire. if needed, the warning will be extended"
       },
       {
         "title": "ALERT 2",
@@ -69,6 +71,9 @@ export class AlertsComponent implements OnInit{
   }
 
   getBackgroundColorByLevel(): string{
+    if (this.noAlerts){
+      return 'rgb(255 255 255)'
+    }
     switch (this.alertLevel){
       case AlertLevel.High:
         return 'rgb(236 112 99 / 65%)'

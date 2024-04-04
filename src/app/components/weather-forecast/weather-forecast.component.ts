@@ -261,8 +261,28 @@ export class WeatherForecastComponent implements OnInit{
         "BP": 969.0,
         "Grad": 6
       },
-      "BEIT DAGAN":{},
-      "EILAT": {},
+      "BEIT DAGAN":{
+        "Rain": 0,
+        "WS": 3.2,
+        "WD": 284,
+        "TD": 26,
+        "TDmax": 26,
+        "TDmin": 26,
+        "RH": 34,
+        "BP": 1011,
+        "Grad": 7
+      },
+      "EILAT": {
+        "WS": 0,
+        "WD": 0,
+        "TD": 18,
+        "RH": 47,
+        "TDmax": 18,
+        "TDmin": 18,
+        "Grad": 8,
+        "Rain": 0,
+        "BP": 1019
+      }
     }
 
     return result
