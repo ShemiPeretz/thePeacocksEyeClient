@@ -29,7 +29,7 @@ export class WeatherForecastComponent implements OnInit{
   minTemp: number = 0; // [celsius]
   rain: number = 0; // [ml]
   pressure: number = 0; // [hPa]
-  weatherCondition: WeatherCondition = WeatherCondition.sunny;
+  weatherCondition: WeatherCondition = WeatherCondition.foggy;
 
   testMode: boolean = true;
 

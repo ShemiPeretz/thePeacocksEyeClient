@@ -13,7 +13,7 @@ export enum AirQualityLevel{
   styleUrl: './air-quality.component.scss'
 })
 export class AirQualityComponent {
-  airQualityLevel: AirQualityLevel = AirQualityLevel.Dangerous;
+  airQualityLevel: AirQualityLevel = AirQualityLevel.Excellent;
   airQualityDescription: string = "";
   pm2:number = 16;
   pm10:number = 42;

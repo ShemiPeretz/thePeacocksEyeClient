@@ -16,7 +16,7 @@ export enum AlertLevel{
 export class AlertsComponent implements OnInit{
   alerts: any[] = [];
   noAlerts: boolean = true;
-  alertLevel: AlertLevel = AlertLevel.Medium;
+  alertLevel: AlertLevel = AlertLevel.Low;
 
   constructor(private http: HttpClient) {
   }
@@ -44,7 +44,7 @@ export class AlertsComponent implements OnInit{
         }
 
         const items: any[] = result.rss.channel[0].item;
-        if (items.length > 0){
+        if (items && items.length > 0){
           this.noAlerts = false;
           for (const alert of items) {
             let alertObj: {title: string, description: string, date: string} = {title: "", description:"", date: ""};
