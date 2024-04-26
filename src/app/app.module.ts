@@ -22,6 +22,8 @@ import { TranslatePipePipe } from './translate-pipe.pipe';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import {NgOptimizedImage} from "@angular/common";
 import { AirQualityComponent } from './components/air-quality/air-quality.component';
+import { ClimateComponent } from './components/climate/climate.component';
+import { AgricultureComponent } from './components/agriculture/agriculture.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { AirQualityComponent } from './components/air-quality/air-quality.compon
     FiveGarphsLayoutComponent,
     TranslatePipePipe,
     AlertsComponent,
-    AirQualityComponent
+    AirQualityComponent,
+    ClimateComponent,
+    AgricultureComponent
   ],
     imports: [
         BrowserModule,

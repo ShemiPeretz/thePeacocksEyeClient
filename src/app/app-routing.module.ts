@@ -4,6 +4,8 @@ import { WeatherForecastComponent } from './components/weather-forecast/weather-
 import { GraphsComponent } from './components/graphs/graphs.component';
 import { MlModelsComponent } from './components/ml-models/ml-models.component';
 import {AlertsComponent} from "./components/alerts/alerts.component";
+import {ClimateComponent} from "./components/climate/climate.component";
+import {AgricultureComponent} from "./components/agriculture/agriculture.component";
 
 const routes: Routes = [
   {
@@ -17,6 +19,14 @@ const routes: Routes = [
   {
     path: 'models',
     component: MlModelsComponent
+  },
+  {
+    path: 'climate',
+    component: ClimateComponent
+  },
+  {
+    path: 'agriculture',
+    component: AgricultureComponent
   }
   ];
 
