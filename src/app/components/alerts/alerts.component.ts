@@ -23,6 +23,7 @@ export class AlertsComponent implements OnInit{
 
   ngOnInit() {
     this.parseRssFeed();
+    // TODO: Snippet for testing! remove for production
     this.alerts = [
       {
       "title": "High Sea swimming danger",
