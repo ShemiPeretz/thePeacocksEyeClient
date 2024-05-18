@@ -4,19 +4,27 @@
   flex-direction: row;
   justify-content: flex-start;
   gap: 20px;
+  height: 100%;
+  width:100%
 }
 
-.map{
+.map {
   //box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
   //border-radius: 10px;
-
+  width: 44%;
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .left-col{
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  //gap: 20px;
+  width: 56%;
+  height: 100%;
 }
 
 .current-weather {
@@ -24,8 +32,8 @@
   border-radius: 10px;
   padding: 20px;
   display: flex;
-  width: 54vw;
-  height: 50vh;
+  //width: 54vw;
+  height: 50%;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
   flex-direction: column;
   color: #ffffff;
@@ -84,4 +92,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  height: 42%;
+  gap:2%;
+  margin-top: 2%;
+  app-alerts{
+    height:88%;
+  }
+  app-air-quality{
+    height:100%;
+  }
 }

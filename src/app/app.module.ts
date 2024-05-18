@@ -24,6 +24,8 @@ import {NgOptimizedImage} from "@angular/common";
 import { AirQualityComponent } from './components/air-quality/air-quality.component';
 import { ClimateComponent } from './components/climate/climate.component';
 import { AgricultureComponent } from './components/agriculture/agriculture.component';
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {MatMenu} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -51,6 +53,9 @@ import { AgricultureComponent } from './components/agriculture/agriculture.compo
         MatSelectModule,
         MatIconModule,
         NgOptimizedImage,
+        MatTabGroup,
+        MatTab,
+        MatMenu,
     ],
   providers: [
     provideClientHydration(),
