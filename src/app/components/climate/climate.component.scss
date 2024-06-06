@@ -3,24 +3,6 @@
 }
 
 
-.en-roads-btn{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-  .column {
-    height: 100vh;
-    width: 100%;
-    //border: solid 1px;
-    //border-color: gray;
-    //border-radius: 5px;
-    margin: 20px;
-  }
-}
-
 .israel-data,.global-data{
 
   .vital-signs-indications{
@@ -76,7 +58,7 @@
 .emissions{
   display: flex;
   flex-direction: row;
-  height: 50%;
+  height: 100%;
 }
 
 .showyourstripes{
@@ -98,3 +80,8 @@
   }
 }
 
+.en-roads-btn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
