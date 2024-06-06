@@ -1,18 +1,130 @@
 <div class="container">
   <div class="row">
-    <div class="column">
+    <div class="column-graph" *ngIf="!isEditingGraph1">
+        <button (click)="editGraph(1)">Edit</button>
         <iframe src="/assets/map/max_temp_beer_sheva.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
     </div>
-    <div class="column">
-        <iframe src="/assets/map/min_temp_beer_sheva.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
+    <div class="column-edit-graph" *ngIf="isEditingGraph1">
+      <mat-label>Stations</mat-label>
+      <mat-select [(ngModel)]="selectedStation1">
+        <mat-option *ngFor="let station of stations" [value]="station.value">{{ station.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Graph Type</mat-label>
+      <mat-select [(ngModel)]="selectedGraphType1">
+        <mat-option *ngFor="let type of graphTypes" [value]="type.value">{{ type.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor X</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorX1">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor Y</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorY1">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Start Time</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate1">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-label>End Time</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate1">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <button (click)="editGraph(1)">Show graph</button>
+    </div>
+    <div class="column-graph" *ngIf="!isEditingGraph2">
+      <button (click)="editGraph(2)">Edit</button>
+      <iframe src="/assets/map/min_temp_beer_sheva.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
+    </div>
+    <div class="column-edit-graph" *ngIf="isEditingGraph2">
+      <mat-label>Stations</mat-label>
+      <mat-select [(ngModel)]="selectedStation2">
+        <mat-option *ngFor="let station of stations" [value]="station.value">{{ station.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Graph Type</mat-label>
+      <mat-select [(ngModel)]="selectedGraphType2">
+        <mat-option *ngFor="let type of graphTypes" [value]="type.value">{{ type.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor X</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorX2">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor Y</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorY2">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Start Time</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate2">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-label>End Time</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate2">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <button (click)="editGraph(2)">Show graph</button>
     </div>
   </div>
   <div class="row">
-    <div class="column">
-        <iframe src="/assets/map/avg_rain_ashdod.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
+    <div class="column-graph" *ngIf="!isEditingGraph3">
+      <button (click)="editGraph(3)">Edit</button>
+      <iframe src="/assets/map/ashdod_tel_aviv_avg_rain.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
     </div>
-    <div class="column">
-        <iframe src="/assets/map/ashdod_tel_aviv_avg_rain.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
+    <div class="column-edit-graph" *ngIf="isEditingGraph3">
+      <mat-label>Stations</mat-label>
+      <mat-select [(ngModel)]="selectedStation3">
+        <mat-option *ngFor="let station of stations" [value]="station.value">{{ station.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Graph Type</mat-label>
+      <mat-select [(ngModel)]="selectedGraphType3">
+        <mat-option *ngFor="let type of graphTypes" [value]="type.value">{{ type.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor X</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorX3">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor Y</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorY3">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Start Time</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate3">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-label>End Time</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate3">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <button (click)="editGraph(3)">Show graph</button>
+    </div>
+    <div class="column-graph" *ngIf="!isEditingGraph4">
+      <button (click)="editGraph(4)">Edit</button>
+      <iframe src="/assets/map/avg_rain_ashdod.html" width="100%" height="100%" style="border:none;" seamless="seamless"></iframe>
+    </div>
+    <div class="column-edit-graph" *ngIf="isEditingGraph4">
+      <mat-label>Stations</mat-label>
+      <mat-select [(ngModel)]="selectedStation4">
+        <mat-option *ngFor="let station of stations" [value]="station.value">{{ station.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Graph Type</mat-label>
+      <mat-select [(ngModel)]="selectedGraphType4">
+        <mat-option *ngFor="let type of graphTypes" [value]="type.value">{{ type.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor X</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorX4">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Monitor Y</mat-label>
+      <mat-select [(ngModel)]="selectedMonitorY4">
+        <mat-option *ngFor="let monitor of monitors" [value]="monitor.value">{{ monitor.viewValue }}</mat-option>
+      </mat-select>
+      <mat-label>Start Time</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="startDate4">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker></mat-datepicker>
+      <mat-label>End Time</mat-label>
+      <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate4">
+      <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatePicker></mat-datepicker>
+      <button (click)="editGraph(4)">Show graph</button>
     </div>
   </div>
 </div>

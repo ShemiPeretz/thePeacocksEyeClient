@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {GraphMeta} from "./data/graph-meta";
 
 @Injectable({
   providedIn: 'root'
@@ -48,12 +49,15 @@ export class DataService {
     return this.http.get<any>('http://127.0.0.1:8080/get-warnings');
   }
 
+  getGraphStations(): Observable<any> {
+    return this.http.get<any>('http://127.0.0.1:8080/graph_stations');
+  }
+
   /*
   Returns plotly graph object in json format
    */
-  getGraph(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8080/get-graph');
+  postGraph(graphMeta: GraphMeta): Observable<any> {
+    return this.http.post<any>('http://127.0.0.1:8080/graphs', graphMeta);
   }
-
 
 }

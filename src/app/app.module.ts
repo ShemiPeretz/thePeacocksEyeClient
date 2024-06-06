@@ -26,6 +26,8 @@ import { ClimateComponent } from './components/climate/climate.component';
 import { AgricultureComponent } from './components/agriculture/agriculture.component';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {MatMenu} from "@angular/material/menu";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -45,18 +47,22 @@ import {MatMenu} from "@angular/material/menu";
     ClimateComponent,
     AgricultureComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        MatSelectModule,
-        MatIconModule,
-        NgOptimizedImage,
-        MatTabGroup,
-        MatTab,
-        MatMenu,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatSelectModule,
+    MatIconModule,
+    NgOptimizedImage,
+    MatTabGroup,
+    MatTab,
+    MatMenu,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatNativeDateModule
+  ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync()
