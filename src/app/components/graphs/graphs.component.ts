@@ -1,7 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {DashboardLayout} from "../../enums/dashboard-layout";
 import {DataService} from "../../data.service";
-import {GraphMeta, TimeInterval, Datasets, STATIONS, GRAPH_TYPES} from "../../data/graph-meta";
+import {
+  GraphMeta,
+  TimeInterval,
+  Datasets,
+  STATIONS,
+  GRAPH_TYPES,
+  RAIN_STATIONS,
+  WEATHER_STATIONS, RADIATION_STATIONS
+} from "../../data/graph-meta";
 
 
 @Component({
@@ -13,7 +21,14 @@ export class GraphsComponent implements OnInit{
   chosenLayout!: DashboardLayout;
   dashboardLayoutsEnum=DashboardLayout;
   graphStations!:[];
-  stations: { [key: number]: string } = STATIONS;
+  stationsByDataset: {[key: string] : { [key: string]: number[] }} = {
+    'daily_rain': RAIN_STATIONS,
+    "monthly_rain": RAIN_STATIONS,
+    "yearly_rain": RAIN_STATIONS,
+    "hourly": WEATHER_STATIONS,
+    "daily": WEATHER_STATIONS,
+    "radiation": RADIATION_STATIONS
+  };
 
 
   constructor(private dataService: DataService) {
@@ -59,4 +74,16 @@ export class GraphsComponent implements OnInit{
     return graphsData;
   }
 
+  validateGraphData(graphData: GraphMeta){
+
+  }
+
+  buildGraph(graphData: GraphMeta): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.dataService.postGraph(graphData).subscribe(
+        graph => resolve(graph),
+        error => reject(error)
+      );
+    });
+  }
 }

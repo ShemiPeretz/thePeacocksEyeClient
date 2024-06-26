@@ -25,6 +25,7 @@ import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {MatMenu} from "@angular/material/menu";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatCheckbox} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatDatepicker,
     MatDatepickerInput,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckbox
   ],
   providers: [
     provideClientHydration(),
