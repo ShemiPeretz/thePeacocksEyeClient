@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GraphsComponent} from "../../graphs.component";
-import {GraphMeta} from "../../../../data/graph-meta";
-import {TimeInterval} from "../../../../data/time-interval";
+import {GraphMeta, TimeInterval, Datasets, STATIONS, GRAPH_TYPES, CHANNELS} from "../../../../data/graph-meta";
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 @Component({
   selector: 'app-four-garphs-layout',
@@ -9,113 +10,63 @@ import {TimeInterval} from "../../../../data/time-interval";
   styleUrl: './four-garphs-layout.component.scss'
 })
 export class FourGarphsLayoutComponent implements OnInit{
-  isEditingGraph1: boolean = false;
-  isEditingGraph2: boolean = false;
-  isEditingGraph3: boolean = false;
-  isEditingGraph4: boolean = false;
+  stations: { [key: number]: string } = STATIONS;
+  graphTypes: { [key: string]: string } = GRAPH_TYPES;
+  channels: { [key: string]: string } = CHANNELS;
+  datasets = Datasets;
 
-  selectedStation1!: string;
-  selectedGraphType1!: string;
-  selectedMonitorX1!: string;
-  selectedMonitorY1!: string;
-  startDate1!: Date;
-  endDate1!: Date;
-  selectedStation2!: string;
-  selectedGraphType2!: string;
-  selectedMonitorX2!: string;
-  selectedMonitorY2!: string;
-  startDate2!: Date;
-  endDate2!: Date;
-  selectedStation3!: string;
-  selectedGraphType3!: string;
-  selectedMonitorX3!: string;
-  selectedMonitorY3!: string;
-  startDate3!: Date;
-  endDate3!: Date;
-  selectedStation4!: string;
-  selectedGraphType4!: string;
-  selectedMonitorX4!: string;
-  selectedMonitorY4!: string;
-  startDate4!: Date;
-  endDate4!: Date;
-
-  stations = [
-    { value: 'station1', viewValue: 'Station 1' },
-    { value: 'station2', viewValue: 'Station 2' },
-    { value: 'station3', viewValue: 'Station 3' }
-  ];
-
-  graphTypes = [
-    { value: 'line', viewValue: 'Line Graph' },
-    { value: 'bar', viewValue: 'Bar Graph' },
-    { value: 'pie', viewValue: 'Pie Chart' }
-  ];
-
-  monitors = [
-    { value: 'monitor1', viewValue: 'Monitor 1' },
-    { value: 'monitor2', viewValue: 'Monitor 2' },
-    { value: 'monitor3', viewValue: 'Monitor 3' }
-  ];
-
+  isEditModes: boolean[] = [false, false, false, false];
+  graphsData: GraphMeta[] = [];
+  selectedGraphTypes: string[] = [];
+  selectedStationsIds: number[] = [];
+  selectedStationsNames: string[] = [];
+  selectedXChannels: string[] = [];
+  selectedYChannels: FormControl[] = [];
+  yChannels: string[][] = [];
+  selectedTimeIntervals: TimeInterval[] = [];
+  selectedDatasets: string[] = [];
+  selectedCumulative: boolean[] = [];
 
   constructor(private graphs: GraphsComponent) {
   }
 
   ngOnInit() {
-    this.selectedStation1 = this.stations[0].value;
-    this.selectedGraphType1 = this.graphTypes[0].value;
-    this.selectedMonitorX1 = this.monitors[0].value;
-    this.selectedMonitorY1 = this.monitors[1].value;
+    this.graphsData = this.graphs.getDefaultGraphMeta(4);
+    this.setSelectedValuesFromGraphData();
+  }
 
-    this.selectedStation2 = this.stations[0].value;
-    this.selectedGraphType2 = this.graphTypes[0].value;
-    this.selectedMonitorX2 = this.monitors[0].value;
-    this.selectedMonitorY2 = this.monitors[1].value;
-
-    this.selectedStation3 = this.stations[0].value;
-    this.selectedGraphType3 = this.graphTypes[0].value;
-    this.selectedMonitorX3 = this.monitors[0].value;
-    this.selectedMonitorY3 = this.monitors[1].value;
-
-    this.selectedStation4 = this.stations[0].value;
-    this.selectedGraphType4 = this.graphTypes[0].value;
-    this.selectedMonitorX4 = this.monitors[0].value;
-    this.selectedMonitorY4 = this.monitors[1].value;
-
-    const today: Date = new Date();
-    const oneYearAgo: Date = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-    this.startDate1 = oneYearAgo;
-    this.endDate1 = today;
-    this.startDate2 = oneYearAgo;
-    this.endDate2 = today;
-    this.startDate3 = oneYearAgo;
-    this.endDate3 = today;
-    this.startDate4 = oneYearAgo;
-    this.endDate4 = today;
+  setSelectedValuesFromGraphData(): void{
+    for (let i = 0; i < 4; i++) {
+      const graphData = this.graphsData[i];
+      this.selectedGraphTypes[i] = graphData.graphType;
+      this.selectedStationsIds[i] = graphData.station;
+      this.selectedStationsNames[i] = this.stations[graphData.station];
+      this.selectedXChannels[i] = graphData.channelX;
+      this.selectedYChannels[i] = new FormControl<string>(graphData.channelsY[0]);
+      this.yChannels[i] = graphData.channelsY;
+      this.selectedYChannels[i].valueChanges.subscribe((selectedValues: string[]) => {
+        // Update yChannels based on selected values
+        this.updateYChannels(selectedValues, i);
+      });
+      this.selectedTimeIntervals[i] = graphData.timeInterval;
+      this.selectedDatasets[i] = graphData.dataset.valueOf();
+      this.selectedCumulative[i] = graphData.cumulative;
+    }
   }
 
   editGraph(graphNumber: number, isShowBtn: boolean): void{
-    if (graphNumber === 1) {
-      if(isShowBtn){
-        this.buildGraph(1)
-      }
-      this.isEditingGraph1 = !this.isEditingGraph1;
-    } else if (graphNumber === 2) {
-      if(isShowBtn){
-        this.buildGraph(2)
-      }
-      this.isEditingGraph2 = !this.isEditingGraph2;
-    } else if (graphNumber === 3) {
-      if(isShowBtn){
-        this.buildGraph(3)
-      }
-      this.isEditingGraph3 = !this.isEditingGraph3;
-    } else if (graphNumber === 4) {
-      if(isShowBtn){
-        this.buildGraph(4)
-      }
-      this.isEditingGraph4 = !this.isEditingGraph4;
+    if(isShowBtn){
+      this.buildGraph(graphNumber);
     }
+    this.isEditModes[graphNumber] = !this.isEditModes[graphNumber];
+  }
+
+  updateYChannels(selectedValues: string[], graphNumber: number) {
+    // Clear existing yChannels array
+    this.yChannels[graphNumber] = [];
+
+    // Push selected values into yChannels array
+    this.yChannels[graphNumber] = selectedValues;
   }
 
   buildGraph(graphNumber: number){

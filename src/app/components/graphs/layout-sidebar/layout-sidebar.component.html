@@ -1,15 +1,10 @@
 <div class="sidebar">
   <h1>{{ 'Layout' | translate }}</h1>
-  <div *ngIf="!testMode" class="layout-type-icon" (click)="changeLayout(layoutEnum.two)">
-    <img [ngClass]="{'chosen':chosenLayout===layoutEnum.two}" src='../assets/img/2-graph-full-icon.png' alt="2 Graph Layout"/>
-  </div>
   <div class="layout-type-icon" (click)="changeLayout(layoutEnum.three)" >
     <img [ngClass]="{'chosen':chosenLayout===layoutEnum.three}" src='../assets/img/3-graph-full-icon.png' alt="3 Graph Layout"/>
   </div>
   <div class="layout-type-icon" (click)="changeLayout(layoutEnum.four)">
     <img [ngClass]="{'chosen':chosenLayout===layoutEnum.four}" src='../assets/img/4-graph-full-icon.png' alt="4 Graph Layout"/>
   </div>
-  <div *ngIf="!testMode" class="layout-type-icon" (click)="changeLayout(layoutEnum.five)">
-    <img [ngClass]="{'chosen':chosenLayout===layoutEnum.five}" src='../assets/img/5-graph-full-icon.png' alt="5 Graph Layout"/>
-  </div>
+
 </div>
