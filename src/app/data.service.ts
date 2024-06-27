@@ -10,10 +10,6 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getVariable(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8080/get-variable');
-  }
-
   getCurrentWeatherForSite(siteId: string): Observable<any> {
     const requestData = { station: siteId };
     return this.http.post<any>('http://127.0.0.1:8080/weather_summery/', requestData);
@@ -58,6 +54,10 @@ export class DataService {
    */
   postGraph(graphMeta: GraphMeta): Observable<any> {
     return this.http.post<any>('http://127.0.0.1:8080/graphs', graphMeta);
+  }
+
+  getAlerts(): Observable<any> {
+    return this.http.get<any>('http://127.0.0.1:8080/get-alerts');
   }
 
 }

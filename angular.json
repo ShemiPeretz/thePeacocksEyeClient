@@ -78,6 +78,9 @@
               "buildTarget": "thePeacocksEyeClient:build:development"
             }
           },
+          "options": {
+            "forceEsbuild": true
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

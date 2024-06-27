@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { parseString } from 'xml2js';
 import { HttpClient } from '@angular/common/http';
+import {DataService} from '../../data.service';
+
 
 export enum AlertLevel{
   High,
@@ -18,50 +19,49 @@ export class AlertsComponent implements OnInit{
   noAlerts: boolean = true;
   alertLevel: AlertLevel = AlertLevel.Low;
 
-  constructor(private http: HttpClient) {
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
-    this.parseRssFeed();
+    this.getAlertsFromRSSFeed();
+    this.setAlertLevel()
     // TODO: Snippet for testing! remove for production
-    this.alerts = [
-      {
-      "title": "High Sea swimming danger",
-      "description": "severe Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 26/03 from 10 until 22 LT.\
-      The state of sea is Slight to Moderate. The significant wave height from 120 to 180 cm, increasing. The hazardous\
-      weather conditions may continue after the warning will expire. if needed, the warning will be extended"
-      }
-    ]
-    this.noAlerts = false;
+    // this.alerts = [
+    //   {
+    //   "title": "High Sea swimming danger",
+    //   "description": "severe Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 26/03 from 10 until 22 LT.\
+    //   The state of sea is Slight to Moderate. The significant wave height from 120 to 180 cm, increasing. The hazardous\
+    //   weather conditions may continue after the warning will expire. if needed, the warning will be extended"
+    //   }
+    // ]
+    // this.noAlerts = false;
   }
 
-  parseRssFeed(): void {
-    const url: string = 'https://ims.gov.il/sites/default/files/ims_data/rss/alert/rssAlert_general_country_en.xml';
-    this.http.get(url, { responseType: 'text' }).subscribe((data) => {
-      parseString(data, (err, result) => {
-        if (err) {
-          console.error('Error parsing alerts RSS feed:', err);
-          return;
-        }
-
-        const items: any[] = result.rss.channel[0].item;
-        if (items && items.length > 0){
-          this.noAlerts = false;
-          for (const alert of items) {
-            let alertObj: {title: string, description: string, date: string} = {title: "", description:"", date: ""};
-            alertObj["title"] = alert.title[0];
-            alertObj["description"] = this.removeHtmlTags(alert.description[0]);
-            alertObj["date"] = alert.pubDate[0];
-            this.alerts.push(alertObj);
-          }
-        }
-      });
+  private getAlertsFromRSSFeed() {
+    this.dataService.getAlerts().subscribe(data => {
+      if (data === "no alerts") {
+        this.noAlerts = true;
+      } else {
+        this.alerts = data;
+        this.noAlerts = false;
+      }
+    }, error => {
+      console.error('Error fetching alerts', error);
     });
   }
 
-  removeHtmlTags(str: string): string {
-    return str.replace(/<[^>]*>/g, '').replace("update: ", '');
+  setAlertLevel() {
+    if (this.noAlerts) {
+      this.alertLevel = AlertLevel.Low;
+    } else {
+      if (this.alerts.length > 3) {
+        this.alertLevel = AlertLevel.High;
+      } else {
+        this.alertLevel = AlertLevel.Medium;
+      }
+    }
   }
+
 
   getBackgroundColorByLevel(): string{
     if (this.noAlerts){

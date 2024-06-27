@@ -20,7 +20,6 @@ import {
 export class GraphsComponent implements OnInit{
   chosenLayout!: DashboardLayout;
   dashboardLayoutsEnum=DashboardLayout;
-  graphStations!:[];
   stationsByDataset: {[key: string] : { [key: string]: number[] }} = {
     'daily_rain': RAIN_STATIONS,
     "monthly_rain": RAIN_STATIONS,
@@ -36,9 +35,6 @@ export class GraphsComponent implements OnInit{
 
   ngOnInit(){
     this.chosenLayout = DashboardLayout.four;
-    this.dataService.getActiveCities().subscribe(data => {
-      this.graphStations = data;
-    });
   }
 
   changeLayout(event:any){
@@ -46,7 +42,7 @@ export class GraphsComponent implements OnInit{
   }
 
   getDefaultGraphMeta(numberOfGraphs: number): GraphMeta[]{
-    var graphsData: GraphMeta[] = [];
+    let graphsData: GraphMeta[] = [];
 
     for (let i = 0; i < numberOfGraphs; i++) {
       let graphData: GraphMeta = {
