@@ -4,11 +4,16 @@ import {DataService} from "../../data.service";
 import {
   GraphMeta,
   TimeInterval,
-  Datasets,
+  Dataset,
   STATIONS,
   GRAPH_TYPES,
   RAIN_STATIONS,
-  WEATHER_STATIONS, RADIATION_STATIONS
+  WEATHER_STATIONS,
+  RADIATION_STATIONS,
+  RAIN_CHANNELS_DAILY,
+  RAIN_CHANNELS_MONTHLY,
+  RAIN_CHANNELS_YEARLY,
+  HOURLY_CHANNELS, DAILY_CHANNELS, RADIATION_CHANNELS
 } from "../../data/graph-meta";
 
 
@@ -28,6 +33,15 @@ export class GraphsComponent implements OnInit{
     "daily": WEATHER_STATIONS,
     "radiation": RADIATION_STATIONS
   };
+  channelsByDataset: {[key: string] : { [key: string]: string }} = {
+    'daily_rain': RAIN_CHANNELS_DAILY,
+    "monthly_rain": RAIN_CHANNELS_MONTHLY,
+    "yearly_rain": RAIN_CHANNELS_YEARLY,
+    "hourly": HOURLY_CHANNELS,
+    "daily": DAILY_CHANNELS,
+    "radiation": RADIATION_CHANNELS
+  };
+
 
 
   constructor(private dataService: DataService) {
@@ -49,7 +63,7 @@ export class GraphsComponent implements OnInit{
         graphType: "line",
         graphSizeX: 400,
         graphSizeY: 300,
-        station: 1,
+        station: [1],
         isTime: true,
         channelX: 'time',
         channelNameX: 'time',
@@ -59,9 +73,7 @@ export class GraphsComponent implements OnInit{
           startTime: new Date(2023, 0, 1), // January 1, 2023
           endTime: new Date(2023, 11, 31)  // December 31, 2023
         },
-        dataset: Datasets.daily,
-        hourly: true,
-        daily: false,
+        dataset: Dataset.daily,
         cumulative: false
       };
       graphsData.push(graphData);

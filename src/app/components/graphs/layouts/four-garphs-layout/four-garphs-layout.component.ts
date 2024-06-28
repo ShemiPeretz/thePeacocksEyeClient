@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GraphsComponent} from "../../graphs.component";
-import {GraphMeta, Datasets, STATIONS, GRAPH_TYPES, CHANNELS} from "../../../../data/graph-meta";
+import {GraphMeta, Dataset, STATIONS, GRAPH_TYPES} from "../../../../data/graph-meta";
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
@@ -12,8 +12,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 export class FourGarphsLayoutComponent implements OnInit{
   stations: { [key: number]: string } = STATIONS;
   graphTypes: { [key: string]: string } = GRAPH_TYPES;
-  channels: { [key: string]: string } = CHANNELS;
-  datasets = Datasets;
+  datasets = Dataset;
 
   isEditModes: boolean[] = [false, false, false, false];
   graphsData: GraphMeta[] = [];

@@ -53,11 +53,12 @@ export class DataService {
   Returns plotly graph object in json format
    */
   postGraph(graphMeta: GraphMeta): Observable<any> {
-    return this.http.post<any>('http://127.0.0.1:8080/graphs', graphMeta);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>('http://127.0.0.1:8080/graphs/', graphMeta, { headers });
   }
 
   getAlerts(): Observable<any> {
-    return this.http.get<any>('http://127.0.0.1:8080/get-alerts');
+    return this.http.get<any>('http://127.0.0.1:8080/get-alerts/');
   }
 
 }

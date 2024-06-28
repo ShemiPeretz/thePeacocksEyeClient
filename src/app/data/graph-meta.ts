@@ -2,16 +2,14 @@ export interface GraphMeta {
   graphType: string;
   graphSizeX: number;
   graphSizeY: number;
-  station: number;
+  station: number[];
   isTime: boolean;
   channelX: string;
   channelNameX: string;
   channelsY: string[];
   channelNamesY: string[];
   timeInterval: TimeInterval;
-  dataset: Datasets;
-  hourly: boolean;
-  daily: boolean;
+  dataset: Dataset;
   cumulative: boolean;
 }
 
@@ -20,7 +18,7 @@ export interface TimeInterval {
   endTime: Date;
 }
 
-export enum Datasets {
+export enum Dataset {
   daily_rain = "Rain - Daily",
   monthly_rain = "Rain - Monthly",
   yearly_rain = "Rain - Yearly",
@@ -40,19 +38,6 @@ export const GRAPH_TYPES: { [key: string]: string } = {
   'line': 'Line Graph',
   'bar': 'Bar Graph',
   'pie': 'Pie Chart'
-};
-
-export const CHANNELS: { [key: string]: string } = {
-  "time": "Time",
-  "Rain": "Rain",
-  "WS": "Wind Speed",
-  "WD": "Wind Direction",
-  "TD": "Temperature",
-  "RH": "Humidity",
-  "TDmax": "Max Temperature",
-  "TDmin": "Min Temperature",
-  "BP": "Pressure",
-  "Grad": "Radiation"
 };
 
 export const WEATHER_STATIONS: { [key: string]: number[] } = {
@@ -1734,4 +1719,88 @@ export const RAIN_STATIONS: { [key: string]: number[] } = {
   "ZOVA MAN": [244352, 244354],
   "ZUR HADASSA": [246630],
   "ZUR NATAN": [133530],
+};
+
+export const HOURLY_CHANNELS: { [key: string]: string } = {
+  "stn_num": "Station Number",
+  "time_obs": "Observation Time",
+  "prs_stn": "Station Pressure",
+  "prs_sea_lvl": "Sea Level Pressure",
+  "prs_lvl_hgt": "Pressure Level Height",
+  "tmp_air_dry": "Dry Air Temperature",
+  "tmp_air_wet": "Wet Air Temperature",
+  "tmp_dew_pnt": "Dew Point Temperature",
+  "hmd_rlt": "Relative Humidity",
+  "wind_dir": "Wind Direction",
+  "wind_spd": "Wind Speed",
+  "year": "Year",
+  "month": "Month",
+  "day": "Day",
+  "hour": "Hour"
+};
+
+export const DAILY_CHANNELS: { [key: string]: string } = {
+  "stn_num": "Station Number",
+  "time_obs": "Observation Time",
+  "tmp_air_max": "Maximum Air Temperature",
+  "tmp_air_min": "Minimum Air Temperature",
+  "tmp_grass_min": "Minimum Grass Temperature",
+  "sns_drt": "Sunshine Duration",
+  "rpr_gale": "Gale Report",
+  "year": "Year",
+  "month": "Month",
+  "day": "Day"
+};
+
+export const RAIN_CHANNELS_DAILY: { [key: string]: string } = {
+  "stn_num": "Station Number",
+  "time_obs": "Observation Time",
+  "rain_06_next": "Rainfall (06:00 to next day 06:00)",
+  "year": "Year",
+  "month": "Month",
+  "day": "Day"
+};
+
+export const RAIN_CHANNELS_MONTHLY: { [key: string]: string } = {
+  "stn_num": "Station Number",
+  "time_obs": "Observation Time",
+  "rain_ttl": "Total Rainfall",
+  "rain_days_num": "Number of Rainy Days",
+  "year": "Year",
+  "month": "Month",
+  "rain_max_day": "Day with Maximum Rainfall",
+  "rain_max_val": "Maximum Rainfall Value"
+};
+
+export const RAIN_CHANNELS_YEARLY: { [key: string]: string } = {
+  "stn_num": "Station Number",
+  "time_obs": "Observation Time",
+  "rain_ttl": "Total Rainfall"
+};
+
+export const RADIATION_CHANNELS: { [key: string]: string } = {
+  "stn_num": "Station Number",
+  "time_obs": "Observation Time",
+  "rad_type": "Radiation Type",
+  "rad_0": "Radiation 0",
+  "rad_1": "Radiation 1",
+  "rad_2": "Radiation 2",
+  "rad_3": "Radiation 3",
+  "rad_4": "Radiation 4",
+  "rad_5": "Radiation 5",
+  "rad_6": "Radiation 6",
+  "rad_7": "Radiation 7",
+  "rad_8": "Radiation 8",
+  "rad_9": "Radiation 9",
+  "rad_10": "Radiation 10",
+  "rad_11": "Radiation 11",
+  "rad_12": "Radiation 12",
+  "rad_13": "Radiation 13",
+  "rad_14": "Radiation 14",
+  "rad_15": "Radiation 15",
+  "rad_16": "Radiation 16",
+  "rad_17": "Radiation 17",
+  "year": "Year",
+  "month": "Month",
+  "day": "Day"
 };

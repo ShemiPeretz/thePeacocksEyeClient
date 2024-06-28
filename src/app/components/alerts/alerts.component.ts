@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import {DataService} from '../../data.service';
 
 
@@ -24,7 +23,7 @@ export class AlertsComponent implements OnInit{
 
   ngOnInit() {
     this.getAlertsFromRSSFeed();
-    this.setAlertLevel()
+    this.setAlertLevel();
     // TODO: Snippet for testing! remove for production
     // this.alerts = [
     //   {
@@ -65,7 +64,7 @@ export class AlertsComponent implements OnInit{
 
   getBackgroundColorByLevel(): string{
     if (this.noAlerts){
-      return 'rgb(255 255 255)'
+      return 'rgba(103, 203, 145,0.65)'
     }
     switch (this.alertLevel){
       case AlertLevel.High:

@@ -19,11 +19,11 @@
       </mat-select>
       <mat-label>Channel X</mat-label>
       <mat-select [(ngModel)]="graphsData[0].channelX">
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[0].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-label>Channels Y</mat-label>
       <mat-select [formControl]="selectedYChannels[0]" multiple>
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[0].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-checkbox [(ngModel)]="graphsData[0].cumulative">Cumulative Graph Data</mat-checkbox>
       <div class="time-pickers">
@@ -57,11 +57,11 @@
       </mat-select>
       <mat-label>Channel X</mat-label>
       <mat-select [(ngModel)]="graphsData[1].channelX">
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[1].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-label>Channels Y</mat-label>
       <mat-select [formControl]="selectedYChannels[1]" multiple>
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[1].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-checkbox [(ngModel)]="graphsData[1].cumulative">Cumulative Graph Data</mat-checkbox>
       <div class="time-pickers">
@@ -97,11 +97,11 @@
       </mat-select>
       <mat-label>Channel X</mat-label>
       <mat-select [(ngModel)]="graphsData[2].channelX">
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[2].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-label>Channels Y</mat-label>
       <mat-select [formControl]="selectedYChannels[2]" multiple>
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[2].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-checkbox [(ngModel)]="graphsData[2].cumulative">Cumulative Graph Data</mat-checkbox>
       <div class="time-pickers">
@@ -135,11 +135,11 @@
       </mat-select>
       <mat-label>Channel X</mat-label>
       <mat-select [(ngModel)]="graphsData[3].channelX">
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[3].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-label>Channels Y</mat-label>
       <mat-select [formControl]="selectedYChannels[3]" multiple>
-        <mat-option *ngFor="let channel of channels | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
+        <mat-option *ngFor="let channel of graphs.channelsByDataset[graphsData[3].dataset] | keyvalue" [value]="channel.key">{{ channel.value }}</mat-option>
       </mat-select>
       <mat-checkbox [(ngModel)]="graphsData[0].cumulative">Cumulative Graph Data</mat-checkbox>
       <div class="time-pickers">
