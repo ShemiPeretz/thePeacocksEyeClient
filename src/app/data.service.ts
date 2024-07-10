@@ -10,7 +10,7 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getCurrentWeatherForSite(siteId: string): Observable<any> {
+  getCurrentWeatherForSite(siteId: number): Observable<any> {
     const requestData = { station: siteId };
     return this.http.post<any>('http://127.0.0.1:8080/weather_summery/', requestData);
   }

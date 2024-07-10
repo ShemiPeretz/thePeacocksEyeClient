@@ -18,36 +18,40 @@ export enum WeatherCondition{
 })
 export class WeatherForecastComponent implements OnInit{
   allSites: any[] = [];
-  allSitesData: {} = {};
-  selectedSite: { siteId:string,siteName:string } = { siteId:'',siteName:'' };
+  allowedSites: any[] = [];
+  selectedSite: { siteId:number,siteName:string } = { siteId:0,siteName:'' };
   temperature: number = 0; // [celsius]
   humidity: number = 0; // [percent]
   windSpeed: number = 0; // [km/h]
   windDirection: number = 0; // [degrees]
-  uv: number = 0; // [percent??]
+  radiation: number = 0; // [w/m2]
   maxTemp: number = 0; // [celsius]
   minTemp: number = 0; // [celsius]
   rain: number = 0; // [ml]
   pressure: number = 0; // [hPa]
   weatherCondition: WeatherCondition = WeatherCondition.sunny;
 
-  testMode: boolean = true;
+  private cacheKey = 'weatherSummaryCache';
+  private cacheDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+  testMode: boolean = false;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    if (this.testMode){
-      this.allSites =  [
-        {"siteId": 411,"siteName": "BEER SHEVA BGU"},
-        {"siteId": 178, "siteName": "TEL AVIV"},
-        {"siteId": 23, "siteName": "JERUSALEM"},
-        {"siteId": 42, "siteName": "HAIFA"},
-        {"siteId": 124, "siteName": "ASHDOD"},
-        {"siteId": 208, "siteName": "ASHKELON"},
-        {"siteId": 10, "siteName": "MAROM GOLAN"},
-        {"siteId": 54, "siteName": "BEIT DAGAN"},
-        {"siteId": 64, "siteName": "EILAT"},
+    this.allowedSites =  [
+      {"siteId": 411,"siteName": "BEER SHEVA BGU"},
+      {"siteId": 178, "siteName": "TEL AVIV"},
+      {"siteId": 23, "siteName": "JERUSALEM"},
+      {"siteId": 42, "siteName": "HAIFA"},
+      {"siteId": 124, "siteName": "ASHDOD"},
+      {"siteId": 208, "siteName": "ASHKELON"},
+      {"siteId": 10, "siteName": "MAROM GOLAN"},
+      {"siteId": 54, "siteName": "BEIT DAGAN"},
+      {"siteId": 64, "siteName": "EILAT"},
     ]
+    if (this.testMode){
+      this.allSites =  this.allowedSites;
     } else {
       this.dataService.getActiveCities().subscribe(data => {
         this.allSites = this.processActiveCitiesToSites(data);
@@ -55,81 +59,115 @@ export class WeatherForecastComponent implements OnInit{
     }
     this.getDefaultSite();
     this.getCurrentWeatherForSite();
-    // TODO - uncomment when real data is streaming
-    // this.weatherCondition = this.calculateWeatherCondition();
   }
 
-  processActiveCitiesToSites(data: any): any[]{
+  processActiveCitiesToSites(data: any): any[] {
     let entries: [string, unknown][] = Object.entries(data);
-    const obj: any[] = [];
-    entries.forEach(entry => obj.push({"siteId": entry[0], "siteName": entry[1]}));
-    return obj;
+    const activeSites: any[] = entries.map(entry => ({
+      siteId: Number(entry[0]),
+      siteName: String(entry[1])
+    }));
+
+    // Filter active sites to only include allowed sites
+    const filteredSites = activeSites.filter(activeSite =>
+      this.allowedSites.some(allowedSite => allowedSite.siteId === activeSite.siteId)
+    );
+
+    return filteredSites;
   }
 
   getDefaultSite(): void{
-    const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU' || site.siteName === 'BEER SHEVA')
+    const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU')
     this.selectedSite = site ?? this.allSites[0];
   }
 
   getCurrentWeatherForSite(){
     if (this.testMode) {
-      this.allSitesData = {
-        "windSpeed": 15,
-        "windDirection": 330,
-        "temperature": 17,
-        "uv": 4
-      };
-      const demoData = this.getDemoData();
-      this.temperature  = demoData[this.selectedSite.siteName]['TD'];
-      this.humidity  = demoData[this.selectedSite.siteName]['RH'];
-      this.windSpeed  = demoData[this.selectedSite.siteName]['WS'];
-      this.windDirection = demoData[this.selectedSite.siteName]['WD'];
-      this.uv = demoData[this.selectedSite.siteName]['Grad'];
-      this.maxTemp = demoData[this.selectedSite.siteName]['TDmax'];
-      this.minTemp = demoData[this.selectedSite.siteName]['TDmin'];
-      this.rain = demoData[this.selectedSite.siteName]['Rain'];
-      this.pressure = demoData[this.selectedSite.siteName]['BP'];
+      return;
     } else {
-      this.dataService.getCurrentWeatherForSite(this.selectedSite.siteId).subscribe(data => {
-        this.allSitesData = this.processWeatherSummary(data);
-      });
+      const siteId = this.selectedSite.siteId;
+      const cachedData = this.getCachedData(siteId);
+      if (cachedData) {
+        this.processWeatherSummary(cachedData);
+      } else {
+        this.dataService.getCurrentWeatherForSite(siteId).subscribe(data => {
+          this.processWeatherSummary(data);
+          this.cacheData(siteId, data);
+        });
+      }
     }
-    this.calculateWeatherCondition()
   }
 
-  processWeatherSummary(data: any): {}{
-    const obj: any = {};
-    let entries: [string, unknown][] = Object.entries(data);
-    for (const entry of entries) switch (entry[0]) {
-      case "TD":
-        obj["temperature"] =  entry[1];
-        break;
-      case "RH":
-        obj["humidity"] =  entry[1];
-        break;
-      case "WS":
-        obj["windSpeed"] =  entry[1];
-        break;
-      case "WD":
-        obj["windDirection"] =  entry[1];
-        break;
-      case "Grad":
-        obj["uv"] =  entry[1];
-        break;
-      case "TDmax":
-        obj["maxTemp"] =  entry[1];
-        break;
-      case "TDmin":
-        obj["minTemp"] =  entry[1];
-        break;
-      case "Rain":
-        obj["rain"] =  entry[1];
-        break;
-      case "BP":
-        obj["pressure"] =  entry[1];
-        break;
+  processWeatherSummary(data: any): void {
+    // Reset all variables to zero at the start
+    this.temperature = 0;
+    this.humidity = 0;
+    this.windSpeed = 0;
+    this.windDirection = 0;
+    this.radiation = 0;
+    this.maxTemp = 0;
+    this.minTemp = 0;
+    this.rain = 0;
+    this.pressure = 0;
+
+    // Process the data if it exists
+    if (data && typeof data === 'object') {
+      let entries: [string, unknown][] = Object.entries(data);
+      for (const [key, value] of entries) {
+        switch (key) {
+          case "temperature_dry":
+            this.temperature = Math.floor(Number(value) || 0);
+            break;
+          case "relative_humidity":
+            this.humidity = Number(value) || 0;
+            break;
+          case "wind_speed":
+            this.windSpeed = Number(value) || 0;
+            break;
+          case "wind_direction":
+            this.windDirection = Number(value) || 0;
+            break;
+          case "radiation_global":
+            this.radiation = Number(value) || 0;
+            break;
+          case "temperature_max":
+            this.maxTemp = Number(value) || 0;
+            break;
+          case "temperature_min":
+            this.minTemp = Number(value) || 0;
+            break;
+          case "rain":
+            this.rain = Number(value) || 0;
+            break;
+          case "pressure":
+            this.pressure = Number(value) || 0;
+            break;
+        }
+      }
     }
-    return obj
+
+    this.calculateWeatherCondition();
+  }
+
+  private getCachedData(siteId: number): any {
+    const cachedString = localStorage.getItem(`${this.cacheKey}_${siteId}`);
+    if (!cachedString) return null;
+
+    const { timestamp, data } = JSON.parse(cachedString);
+    if (new Date().getTime() - timestamp > this.cacheDuration) {
+      localStorage.removeItem(`${this.cacheKey}_${siteId}`);
+      return null;
+    }
+
+    return data;
+  }
+
+  private cacheData(siteId: number, data: any): void {
+    const cacheData = {
+      timestamp: new Date().getTime(),
+      data: data
+    };
+    localStorage.setItem(`${this.cacheKey}_${siteId}`, JSON.stringify(cacheData));
   }
 
 
@@ -180,112 +218,6 @@ export class WeatherForecastComponent implements OnInit{
       default:
         return 'url(/assets/img/sunny-sky.jpg)';
     }
-  }
-
-  getDemoData(): any{
-    let result: any = {};
-    result = {
-      "BEER SHEVA BGU": {
-        "Rain": 0,
-        "WS": 1.7,
-        "WD": 113,
-        "TD": 28,
-        "RH": 35,
-        "TDmax": 31,
-        "TDmin": 15,
-        "BP": 980,
-        "Grad": 9
-      },
-      "TEL AVIV": {
-        "Rain": 0,
-        "WS": 3,
-        "WD": 254,
-        "TD": 24,
-        "RH": 89,
-        "TDmax": 17,
-        "TDmin": 25,
-        "BP": "--",
-        "Grad": 7
-      },
-      "JERUSALEM": {
-        "Rain": 0,
-        "WS": 1.9,
-        "WD": 349,
-        "TD": 22,
-        "TDmax": 25,
-        "TDmin": 18,
-        "BP": 924,
-        "RH": 20,
-        "Grad": 7
-      },
-      "HAIFA":{
-        "Rain": 0,
-        "WS": 3.1,
-        "WD": 237,
-        "TD": 23,
-        "RH": 47,
-        "TDmax": 23,
-        "TDmin": 16,
-        "Grad": 7
-      },
-      "ASHDOD":{
-        "Rain": 0,
-        "WS": 1.2,
-        "WD": 233,
-        "TD": 24,
-        "RH": 89,
-        "TDmax": 26,
-        "TDmin": 14,
-        "BP": "--",
-        "Grad": 7
-      },
-      "ASHKELON":{
-        "Rain": 0,
-        "WS": 2,
-        "WD": 305,
-        "TD": 24,
-        "RH": 89,
-        "TDmax": 26,
-        "TDmin": 14,
-        "BP": "--",
-        "Grad": 7
-      },
-      "MAROM GOLAN":{
-        "Rain": 0.0,
-        "WS": 5.3,
-        "WD": 288.0,
-        "RH": 31.0,
-        "TD": 26,
-        "TDmax": 13,
-        "TDmin": 28,
-        "BP": 969.0,
-        "Grad": 6
-      },
-      "BEIT DAGAN":{
-        "Rain": 0,
-        "WS": 3.2,
-        "WD": 284,
-        "TD": 24,
-        "TDmax": 17,
-        "TDmin": 26,
-        "RH": 34,
-        "BP": 1011,
-        "Grad": 7
-      },
-      "EILAT": {
-        "WS": 0,
-        "WD": 0,
-        "TD": 36,
-        "RH": 47,
-        "TDmax": 36,
-        "TDmin": 23,
-        "Grad": 9,
-        "Rain": 0,
-        "BP": 1019
-      }
-    }
-
-    return result
   }
 
   protected readonly WeatherCondition = WeatherCondition;
