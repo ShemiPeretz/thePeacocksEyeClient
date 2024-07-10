@@ -19,12 +19,12 @@ export interface TimeInterval {
 }
 
 export enum Dataset {
-  daily_rain = "Rain - Daily",
-  monthly_rain = "Rain - Monthly",
-  yearly_rain = "Rain - Yearly",
-  hourly = "Weather - Hourly",
-  daily = "Weather - Daily",
-  radiation = "Radiation"
+  daily_rain = "daily_rain",
+  monty_rain = "monty_rain",
+  yearly_rain = "yearly_rain",
+  hourly = "hourly",
+  daily = "daily",
+  radiation = "radiation"
 }
 
 export const STATIONS: { [key: number]: string } = {
