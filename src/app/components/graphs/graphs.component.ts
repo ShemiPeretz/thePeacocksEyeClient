@@ -94,4 +94,15 @@ export class GraphsComponent implements OnInit{
       );
     });
   }
+
+  loadJson(filePath: string): any {
+    this.dataService.readJsonFile(filePath).subscribe(
+      data => {
+        return data.data;
+      },
+      error => {
+        console.error('Error reading JSON file', error);
+      }
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewChild,  ViewChildren, QueryList} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import {GraphsComponent} from "../../graphs.component";
 import {GraphMeta, Dataset, STATIONS, GRAPH_TYPES} from "../../../../data/graph-meta";
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -10,7 +10,7 @@ declare var Plotly: any;
   templateUrl: './four-garphs-layout.component.html',
   styleUrl: './four-garphs-layout.component.scss'
 })
-export class FourGarphsLayoutComponent implements OnInit{
+export class FourGarphsLayoutComponent implements OnInit, AfterViewInit{
   stations: { [key: number]: string } = STATIONS;
   graphTypes: { [key: string]: string } = GRAPH_TYPES;
   datasets = Dataset;
@@ -20,7 +20,7 @@ export class FourGarphsLayoutComponent implements OnInit{
   selectedYChannels: FormControl[] = [];
   yChannels: string[][] = [];
 
-  graphsJsons: string[] = [];
+  graphsJsonsPaths: string[] = ['/assets/graph1.json'];
   @ViewChildren('plotlyGraph') plotlyGraphs!: QueryList<ElementRef>;
   graphIds: string[] = ['graph1', 'graph2', 'graph3', 'graph4'];
 
@@ -32,9 +32,11 @@ export class FourGarphsLayoutComponent implements OnInit{
 
   ngOnInit() {
     this.graphsData = this.graphs.getDefaultGraphMeta(4);
-    this.initializeGraphs();
     this.setSelectedValuesFromDefaultGraphData();
+  }
 
+  ngAfterViewInit(): void {
+    // this.initializeGraphs();
   }
 
   setSelectedValuesFromDefaultGraphData(): void{
@@ -69,13 +71,14 @@ export class FourGarphsLayoutComponent implements OnInit{
     this.graphIds.forEach((id, index) => {
       const graphElement = this.plotlyGraphs.find(el => el.nativeElement.id === id);
       if (graphElement) {
-        this.renderGraph(graphElement.nativeElement, this.graphsJsons[index]);
+        this.renderGraph(graphElement.nativeElement, this.graphs.loadJson(this.graphsJsonsPaths[0]));
       }
     });
   }
 
   renderGraph(element: HTMLElement, data: any) {
     Plotly.newPlot(element, JSON.parse(data));
+    const x = 0;
   }
 
   updateGraph(graphId: string, newData: any) {

@@ -61,4 +61,8 @@ export class DataService {
     return this.http.get<any>('http://127.0.0.1:8080/get-alerts/');
   }
 
+  readJsonFile(filePath: string): Observable<any> {
+    return this.http.get<any>(filePath);
+  }
+
 }
