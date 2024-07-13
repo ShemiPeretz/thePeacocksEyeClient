@@ -57,6 +57,10 @@ export class DataService {
     return this.http.post<any>('http://127.0.0.1:8080/graphs/', graphMeta, { headers });
   }
 
+  getDefaultGraphs(): Observable<any> {
+    return this.http.get<any>('http://127.0.0.1:8080/get-default-graph/');
+  }
+
   getAlerts(): Observable<any> {
     return this.http.get<any>('http://127.0.0.1:8080/get-alerts/');
   }

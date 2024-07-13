@@ -1,7 +1,8 @@
-import {Component, OnInit, ElementRef, ViewChild, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {GraphsComponent} from "../../graphs.component";
-import {GraphMeta, Dataset, STATIONS, GRAPH_TYPES} from "../../../../data/graph-meta";
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Dataset, GRAPH_TYPES, GraphMeta, STATIONS} from "../../../../data/graph-meta";
+import {FormControl} from '@angular/forms';
+
 declare var Plotly: any;
 
 
@@ -10,7 +11,8 @@ declare var Plotly: any;
   templateUrl: './four-garphs-layout.component.html',
   styleUrl: './four-garphs-layout.component.scss'
 })
-export class FourGarphsLayoutComponent implements OnInit, AfterViewInit{
+export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
+  LAYOUT: string = 'FourGarphs';
   stations: { [key: number]: string } = STATIONS;
   graphTypes: { [key: string]: string } = GRAPH_TYPES;
   datasets = Dataset;
@@ -20,26 +22,25 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit{
   selectedYChannels: FormControl[] = [];
   yChannels: string[][] = [];
 
-  graphsJsonsPaths: string[] = ['/assets/graph1.json'];
   @ViewChildren('plotlyGraph') plotlyGraphs!: QueryList<ElementRef>;
-  graphIds: string[] = ['graph1', 'graph2', 'graph3', 'graph4'];
-
-
+  plotlyGraphIds: string[] = ['graph1', 'graph2', 'graph3', 'graph4'];
 
 
   constructor(protected graphs: GraphsComponent) {
   }
 
   ngOnInit() {
+    // Filling default meta data for graphs
     this.graphsData = this.graphs.getDefaultGraphMeta(4);
     this.setSelectedValuesFromDefaultGraphData();
   }
 
   ngAfterViewInit(): void {
-    // this.initializeGraphs();
+    // Initializing default plotly graphs
+    this.initializeGraphs();
   }
 
-  setSelectedValuesFromDefaultGraphData(): void{
+  setSelectedValuesFromDefaultGraphData(): void {
     for (let i = 0; i < 4; i++) {
       const graphData = this.graphsData[i];
       this.selectedYChannels[i] = new FormControl<string>(graphData.channelsY[0]);
@@ -51,8 +52,8 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit{
     }
   }
 
-  editGraph(graphNumber: number, isShowBtn: boolean): void{
-    if(isShowBtn){
+  editGraph(graphNumber: number, isShowBtn: boolean): void {
+    if (isShowBtn) {
       this.updateSpecificGraph(graphNumber);
     }
     this.isEditModes[graphNumber] = !this.isEditModes[graphNumber];
@@ -63,21 +64,54 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit{
     this.yChannels[graphNumber] = [];
     // Push selected values into yChannels array
     this.yChannels[graphNumber] = selectedValues;
+    const yChannelsLabels = this.getChannelLabelsFromName(graphNumber, selectedValues)
     //Update graphData
     this.graphsData[graphNumber].channelsY = selectedValues;
+    this.graphsData[graphNumber].channelNamesY = yChannelsLabels;
   }
 
+  getChannelLabelsFromName(graphNumber: number, selectedValues: string[]): string[]{
+    let labels: string[] = [];
+    let channelsByDataset = this.graphs.channelsByDataset[this.graphsData[graphNumber].dataset];
+    for (const selectedValue of selectedValues) {
+      labels.push(channelsByDataset[selectedValue])
+    }
+    return labels
+  }
+
+  validateGraphData(graphNumber: number){
+    this.graphsData[graphNumber].channelNameX = this.getChannelLabelsFromName(
+      graphNumber, [this.graphsData[graphNumber].channelX])[0];
+  }
+
+
   initializeGraphs() {
-    this.graphIds.forEach((id, index) => {
+    this.plotlyGraphIds.forEach((id, index) => {
       const graphElement = this.plotlyGraphs.find(el => el.nativeElement.id === id);
       if (graphElement) {
-        this.renderGraph(graphElement.nativeElement, this.graphs.loadJson(this.graphsJsonsPaths[0]));
+        const cachedGraph = this.graphs.getGraph(this.LAYOUT, id);
+        if (cachedGraph) {
+          this.renderGraph(graphElement.nativeElement, cachedGraph);
+        } else {
+          this.graphs.getDefaultGraphs().then(value => {
+            const defaultGraphs = value;
+            this.renderGraph(graphElement.nativeElement, defaultGraphs);
+            // Cache the default graph
+            this.graphs.setGraph(this.LAYOUT, id, defaultGraphs);
+          });
+        }
       }
     });
   }
 
   renderGraph(element: HTMLElement, data: any) {
-    Plotly.newPlot(element, JSON.parse(data));
+    const layout = {
+      title: 'Responsive to window\'s size!',
+      font: {size: 18}
+    };
+    const config = {responsive: false}
+    Plotly.newPlot(element, JSON.parse(data), layout, config);
+    // Plotly.react(element, JSON.parse(data));
     const x = 0;
   }
 
@@ -89,9 +123,12 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit{
   }
 
   updateSpecificGraph(graphNumber: number) {
-    this.graphs.validateGraphData(this.graphsData[graphNumber]);
+    this.validateGraphData(graphNumber);
     this.graphs.buildGraph(this.graphsData[graphNumber]).then(graph => {
-      this.updateGraph("graph" + (graphNumber+1).toString(), graph);
+      const graphId = "graph" + (graphNumber + 1).toString();
+      this.updateGraph(graphId, graph);
+      // Cache the updated graph
+      this.graphs.setGraph(this.LAYOUT, graphId, graph);
     }).catch(error => {
       console.error(error);
     });

@@ -42,7 +42,7 @@ export class GraphsComponent implements OnInit{
     "radiation": RADIATION_CHANNELS
   };
 
-
+  private cache: { [key: string]: string } = {};
 
   constructor(private dataService: DataService) {
   }
@@ -61,8 +61,8 @@ export class GraphsComponent implements OnInit{
     for (let i = 0; i < numberOfGraphs; i++) {
       let graphData: GraphMeta = {
         graphType: "line",
-        graphSizeX: 400,
-        graphSizeY: 300,
+        graphSizeX: 600,
+        graphSizeY: 400,
         station: [1],
         isTime: true,
         channelX: 'time',
@@ -86,6 +86,15 @@ export class GraphsComponent implements OnInit{
 
   }
 
+  getDefaultGraphs(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.dataService.getDefaultGraphs().subscribe(
+        graph => resolve(graph),
+        error => reject(error)
+      );
+    });
+  }
+
   buildGraph(graphData: GraphMeta): Promise<string> {
     return new Promise((resolve, reject) => {
       this.dataService.postGraph(graphData).subscribe(
@@ -95,14 +104,55 @@ export class GraphsComponent implements OnInit{
     });
   }
 
-  loadJson(filePath: string): any {
-    this.dataService.readJsonFile(filePath).subscribe(
-      data => {
-        return data.data;
-      },
-      error => {
-        console.error('Error reading JSON file', error);
-      }
-    );
+  setGraph(layout: string, graphId: string, graphData: string): void {
+    const cacheKey = this.getCacheKey(layout, graphId);
+    this.cache[cacheKey] = graphData;
+    // Save to localStorage for persistence across page reloads
+    localStorage.setItem(cacheKey, graphData);
   }
+
+  getGraph(layout: string, graphId: string): string | null {
+    const cacheKey = this.getCacheKey(layout, graphId);
+    // Check in-memory cache first
+    if (this.cache[cacheKey]) {
+      return this.cache[cacheKey];
+    }
+    // If not in memory, check localStorage
+    const storedGraph = localStorage.getItem(cacheKey);
+    if (storedGraph) {
+      this.cache[cacheKey] = storedGraph; // Load into memory cache
+      return storedGraph;
+    }
+    return null;
+  }
+
+  clearCache(layout?: string): void {
+    if (layout) {
+      // Clear cache for specific layout
+      const prefix = `graph_${layout}_`;
+      this.cache = Object.keys(this.cache).reduce((acc, key) => {
+        if (!key.startsWith(prefix)) {
+          acc[key] = this.cache[key];
+        }
+        return acc;
+      }, {} as {[key: string]: string});
+
+      // Clear localStorage items for specific layout
+      Object.keys(localStorage)
+        .filter(key => key.startsWith(prefix))
+        .forEach(key => localStorage.removeItem(key));
+    } else {
+      // Clear all cache
+      this.cache = {};
+      // Clear all localStorage items starting with 'graph_'
+      Object.keys(localStorage)
+        .filter(key => key.startsWith('graph_'))
+        .forEach(key => localStorage.removeItem(key));
+    }
+  }
+
+  private getCacheKey(layout: string, graphId: string): string {
+    return `graph_${layout}_${graphId}`;
+  }
+
 }
