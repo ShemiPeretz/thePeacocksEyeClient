@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataService} from "../../data.service";
+import {channel} from "node:diagnostics_channel";
 
 export enum AirQualityLevel{
   Dangerous = "Dangerous",
@@ -7,12 +9,13 @@ export enum AirQualityLevel{
   Fair = "Fair" ,
   Excellent = "Excellent"
 }
+
 @Component({
   selector: 'app-air-quality',
   templateUrl: './air-quality.component.html',
   styleUrl: './air-quality.component.scss'
 })
-export class AirQualityComponent {
+export class AirQualityComponent implements OnInit{
   airQualityLevel: AirQualityLevel = AirQualityLevel.Unhealthy;
   airQualityDescription: string = "";
   pm2:number = 16;
@@ -20,8 +23,28 @@ export class AirQualityComponent {
   no2:number = 5;
   o3:number = 81;
 
-  constructor() {
+
+  constructor(private dataService: DataService) {
+  }
+
+  ngOnInit() {
+    this.getAirQualityChannelsValues();
     this.airQualityDescription = this.getDescriptionByLevel();
+  }
+
+  getAirQualityChannelsValues(): void {
+    this.dataService.getAirQuality().subscribe(data => {
+        this.setAirQualityChannelsValues(data);
+      }
+    );
+  }
+
+  setAirQualityChannelsValues(data: any) : void {
+    const channels = data.channels;
+    this.pm2 = channels['PM2.5'];
+    this.pm10 = channels['PM10'];
+    this.no2 = channels['NO2'];
+    this.o3 = channels['O3'];
   }
 
   getBackgroundColorByLevel(): string{

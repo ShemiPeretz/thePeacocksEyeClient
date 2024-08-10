@@ -114,4 +114,42 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    color: white;
   }
+
+
+.climate-tools {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.links {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.button-link {
+  background-color: rgba(0,0,0,0.6);
+  color: #FFFFFF;
+  font-size: 18px;
+  max-width: 95%;
+  padding: 10px 30px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  transition: all 300ms ease-in-out;
+  display: flex;
+  justify-content: center;
+}
+
+.button-link:last-of-type {
+  margin-bottom: 0px;
+}
+
+.button-link:hover {
+  background-color: rgba(0,0,0,0.8);
+  transition: all 300ms ease-in-out;
+}
