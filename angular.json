@@ -42,7 +42,8 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": true
+            "prerender": false,
+            "ssr": false
           },
           "configurations": {
             "production": {
@@ -86,7 +87,9 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "thePeacocksEyeClient:build"
+            "buildTarget": "thePeacocksEyeClient:build",
+            "prerender": false,
+            "ssr": false
           }
         },
         "test": {
@@ -106,7 +109,9 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "prerender": false,
+            "ssr": false
           }
         }
       }
