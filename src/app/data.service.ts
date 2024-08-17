@@ -12,7 +12,7 @@ export class DataService {
 
   getCurrentWeatherForSite(siteId: number): Observable<any> {
     const requestData = { station: siteId };
-    return this.http.post<any>('http://127.0.0.1:8080/weather_summery/', requestData);
+    return this.http.post<any>('http://127.0.0.1:8080/weather_summary/', requestData);
   }
 
   getAllSites(): Observable<any> {
@@ -22,7 +22,7 @@ export class DataService {
   /*
   Returns List of all cities that has an active Temperature sensor.
    */
-  getActiveCities(): Observable<any>{
+  getActiveSites(): Observable<any>{
     return this.http.get<any>('http://127.0.0.1:8080/active-cities/');
   }
 

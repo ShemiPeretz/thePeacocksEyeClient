@@ -31,7 +31,8 @@ export class WeatherForecastComponent implements OnInit{
   pressure: number = 0; // [hPa]
   weatherCondition: WeatherCondition = WeatherCondition.sunny;
 
-  private cacheKey = 'weatherSummaryCache';
+  private weatherDataCacheKey = 'weatherSummaryCache';
+  private activeSitesDataCacheKey = 'activeSitesCache';
   private cacheDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
 
   testMode: boolean = false;
@@ -39,8 +40,7 @@ export class WeatherForecastComponent implements OnInit{
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-
-    // Testing is server side rendering is off (should return true + localstorage should be available)
+    // Testing if server side rendering (SSR) is off (should return true + localstorage should be available)
     console.log('Is window defined?', typeof window !== 'undefined');
     try {
       localStorage.setItem('test', 'test');
@@ -48,9 +48,19 @@ export class WeatherForecastComponent implements OnInit{
     } catch (e) {
       console.log('localStorage is not available');
     }
+    // setting allowed sites
+    this.setAllowedSites();
+    // Fetching active sites
+    this.setActiveSites();
+    // Setting default site for component start-up
+    this.getDefaultSite();
+    // Fetching weather data for the default site
+    this.getCurrentWeatherForSelectedSite();
+  }
 
-    this.allowedSites =  [
-      {"siteId": 411,"siteName": "BEER SHEVA BGU"},
+  private setAllowedSites(): void {
+    this.allowedSites = [
+      {"siteId": 411, "siteName": "BEER SHEVA BGU"},
       {"siteId": 178, "siteName": "TEL AVIV"},
       {"siteId": 23, "siteName": "JERUSALEM"},
       {"siteId": 42, "siteName": "HAIFA"},
@@ -58,20 +68,27 @@ export class WeatherForecastComponent implements OnInit{
       {"siteId": 208, "siteName": "ASHKELON"},
       {"siteId": 10, "siteName": "MAROM GOLAN"},
       {"siteId": 54, "siteName": "BEIT DAGAN"},
-      {"siteId": 64, "siteName": "EILAT"},
+      {"siteId": 64, "siteName": "EILAT"}
     ]
-    if (this.testMode){
-      this.allSites =  this.allowedSites;
-    } else {
-      this.dataService.getActiveCities().subscribe(data => {
-        this.allSites = this.processActiveCitiesToSites(data);
-      });
-    }
-    this.getDefaultSite();
-    this.getCurrentWeatherForSite();
   }
 
-  processActiveCitiesToSites(data: any): any[] {
+  private setActiveSites() {
+    if (this.testMode){
+      this.allSites =  this.allowedSites;
+      return;
+    }
+    const cachedData = this.getCachedActiveSitesData();
+    if (cachedData) {
+      this.allSites = this.processActiveSitesData(cachedData);
+    } else {
+      this.dataService.getActiveSites().subscribe(data => {
+        this.allSites = this.processActiveSitesData(data);
+        this.cacheActiveSitesData(data);
+      });
+    }
+  }
+
+  processActiveSitesData(data: any): any[] {
     let entries: [string, unknown][] = Object.entries(data);
     const activeSites: any[] = entries.map(entry => ({
       siteId: Number(entry[0]),
@@ -87,29 +104,29 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   getDefaultSite(): void{
-    // const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU')
-    // this.selectedSite = site ?? this.allSites[0];
-    this.selectedSite = {"siteId": 411,"siteName": "BEER SHEVA BGU"};
+    const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU')
+    this.selectedSite = site ?? this.allSites[0];
+    // this.selectedSite = {"siteId": 411,"siteName": "BEER SHEVA BGU"};
   }
 
-  getCurrentWeatherForSite(){
+  getCurrentWeatherForSelectedSite(){
     if (this.testMode) {
       return;
     } else {
-      const siteId = this.selectedSite.siteId;
-      const cachedData = this.getCachedData(siteId);
+      const siteId = this.selectedSite?.siteId;
+      const cachedData = this.getCachedWeatherData(siteId);
       if (cachedData) {
-        this.processWeatherSummary(cachedData);
+        this.processWeatherData(cachedData);
       } else {
         this.dataService.getCurrentWeatherForSite(siteId).subscribe(data => {
-          this.processWeatherSummary(data);
-          this.cacheData(siteId, data);
+          this.processWeatherData(data);
+          this.cacheWeatherData(siteId, data);
         });
       }
     }
   }
 
-  processWeatherSummary(data: any): void {
+  processWeatherData(data: any): void {
     // Reset all variables to zero at the start
     this.temperature = 0;
     this.humidity = 0;
@@ -160,31 +177,45 @@ export class WeatherForecastComponent implements OnInit{
     this.calculateWeatherCondition();
   }
 
-  private getCachedData(siteId: number): any {
-    const cachedString = localStorage.getItem(`${this.cacheKey}_${siteId}`);
-    if (!cachedString) return null;
+  private getCachedWeatherData(siteId: number): any {
+    const cacheKey: string = `${this.weatherDataCacheKey}_${siteId}`;
+    return this.getCachedData(cacheKey);
+  }
+  private getCachedActiveSitesData(): any {
+    return this.getCachedData(this.activeSitesDataCacheKey);
+  }
 
-    const { timestamp, data } = JSON.parse(cachedString);
+  private getCachedData(cacheKey: string): any {
+    const cachedString = localStorage.getItem(cacheKey);
+    if (!cachedString) return null;
+    const {timestamp, data} = JSON.parse(cachedString);
     if (new Date().getTime() - timestamp > this.cacheDuration) {
-      localStorage.removeItem(`${this.cacheKey}_${siteId}`);
+      localStorage.removeItem(cacheKey);
       return null;
     }
-
     return data;
   }
 
-  private cacheData(siteId: number, data: any): void {
+  private cacheWeatherData(siteId: number, data: any): void {
+    const cacheKey = `${this.weatherDataCacheKey}_${siteId}`;
+    this.cacheData(data, cacheKey);
+  }
+
+  private cacheActiveSitesData(data: any): void {
+    this.cacheData(data, this.activeSitesDataCacheKey);
+  }
+
+  private cacheData(data: any, cacheKey: string) {
     const cacheData = {
       timestamp: new Date().getTime(),
       data: data
     };
-    localStorage.setItem(`${this.cacheKey}_${siteId}`, JSON.stringify(cacheData));
+    localStorage.setItem(cacheKey, JSON.stringify(cacheData));
   }
-
 
   onDropdownChange(event: any) {
     this.selectedSite = event.value;
-    this.getCurrentWeatherForSite();
+    this.getCurrentWeatherForSelectedSite();
   }
 
   getWindArrowRotation(): string {
