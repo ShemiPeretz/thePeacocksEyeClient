@@ -12,7 +12,7 @@ export interface GraphMeta {
   dataset: Dataset;
   cumulative: boolean;
 }
-
+''
 export interface TimeInterval {
   startTime: Date;
   endTime: Date;

@@ -40,20 +40,20 @@ export class WeatherForecastComponent implements OnInit{
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    // Testing if server side rendering (SSR) is off (should return true + localstorage should be available)
-    console.log('Is window defined?', typeof window !== 'undefined');
-    try {
-      localStorage.setItem('test', 'test');
-      console.log('localStorage is available');
-    } catch (e) {
-      console.log('localStorage is not available');
-    }
+    // Setting default site for component start-up
+    this.getDefaultSite();
+    // // Testing if server side rendering (SSR) is off (should return true + localstorage should be available)
+    // console.log('Is window defined?', typeof window !== 'undefined');
+    // try {
+    //   localStorage.setItem('test', 'test');
+    //   console.log('localStorage is available');
+    // } catch (e) {
+    //   console.log('localStorage is not available');
+    // }
     // setting allowed sites
     this.setAllowedSites();
     // Fetching active sites
     this.setActiveSites();
-    // Setting default site for component start-up
-    this.getDefaultSite();
     // Fetching weather data for the default site
     this.getCurrentWeatherForSelectedSite();
   }
