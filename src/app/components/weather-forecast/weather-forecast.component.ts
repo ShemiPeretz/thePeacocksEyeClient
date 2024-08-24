@@ -104,9 +104,9 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   getDefaultSite(): void{
-    const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU')
-    this.selectedSite = site ?? this.allSites[0];
-    // this.selectedSite = {"siteId": 411,"siteName": "BEER SHEVA BGU"};
+    // const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU')
+    // this.selectedSite = site ?? this.allSites[0];
+    this.selectedSite = {"siteId": 411,"siteName": "BEER SHEVA BGU"};
   }
 
   getCurrentWeatherForSelectedSite(){
