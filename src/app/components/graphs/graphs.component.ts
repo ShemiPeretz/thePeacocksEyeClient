@@ -99,7 +99,7 @@ export class GraphsComponent implements OnInit{
     return new Promise((resolve, reject) => {
       this.dataService.postGraph(graphData).subscribe(
         graph => resolve(graph),
-        error => reject(error)
+        error => {window.alert(error); reject(error)}
       );
     });
   }

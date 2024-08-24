@@ -40,8 +40,7 @@ export class WeatherForecastComponent implements OnInit{
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    // Setting default site for component start-up
-    this.getDefaultSite();
+
     // // Testing if server side rendering (SSR) is off (should return true + localstorage should be available)
     // console.log('Is window defined?', typeof window !== 'undefined');
     // try {
@@ -86,6 +85,8 @@ export class WeatherForecastComponent implements OnInit{
         this.cacheActiveSitesData(data);
       });
     }
+    // Setting default site for component start-up
+    this.getDefaultSite();
   }
 
   processActiveSitesData(data: any): any[] {
@@ -104,9 +105,9 @@ export class WeatherForecastComponent implements OnInit{
   }
 
   getDefaultSite(): void{
-    // const site = this.allSites.find(site => site.siteName === 'BEER SHEVA BGU')
-    // this.selectedSite = site ?? this.allSites[0];
-    this.selectedSite = {"siteId": 411,"siteName": "BEER SHEVA BGU"};
+    const site = this.allSites.find(site => site.siteId === 411)
+    this.selectedSite = site ?? this.allSites[0];
+   // this.selectedSite = {"siteId": 411,"siteName": 'BEER SHEVA BGU'};
   }
 
   getCurrentWeatherForSelectedSite(){

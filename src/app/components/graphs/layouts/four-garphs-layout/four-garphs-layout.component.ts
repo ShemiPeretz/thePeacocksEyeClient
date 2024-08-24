@@ -2,6 +2,8 @@ import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} f
 import {GraphsComponent} from "../../graphs.component";
 import {Dataset, GRAPH_TYPES, GraphMeta, STATIONS} from "../../../../data/graph-meta";
 import {FormControl} from '@angular/forms';
+import {PopupMessageComponent} from "../../../popup-message/popup-message.component";
+import {MatDialog} from "@angular/material/dialog";
 
 declare var Plotly: any;
 
@@ -26,7 +28,7 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
   plotlyGraphIds: string[] = ['graph1', 'graph2', 'graph3', 'graph4'];
 
 
-  constructor(protected graphs: GraphsComponent) {
+  constructor(protected graphs: GraphsComponent, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -53,10 +55,14 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
   }
 
   editGraph(graphNumber: number, isShowBtn: boolean): void {
-    if (isShowBtn) {
-      this.updateSpecificGraph(graphNumber);
+    if (this.graphsData[graphNumber]?.channelsY.includes(this.graphsData[graphNumber]?.channelX)) {
+      this.showPopup('', 'overlapping x and y channels');
+    } else {
+      if (isShowBtn) {
+        this.updateSpecificGraph(graphNumber);
+      }
+      this.isEditModes[graphNumber] = !this.isEditModes[graphNumber];
     }
-    this.isEditModes[graphNumber] = !this.isEditModes[graphNumber];
   }
 
   updateYChannels(selectedValues: string[], graphNumber: number) {
@@ -70,7 +76,7 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
     this.graphsData[graphNumber].channelNamesY = yChannelsLabels;
   }
 
-  getChannelLabelsFromName(graphNumber: number, selectedValues: string[]): string[]{
+  getChannelLabelsFromName(graphNumber: number, selectedValues: string[]): string[] {
     let labels: string[] = [];
     let channelsByDataset = this.graphs.channelsByDataset[this.graphsData[graphNumber].dataset];
     for (const selectedValue of selectedValues) {
@@ -79,7 +85,7 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
     return labels
   }
 
-  validateGraphData(graphNumber: number){
+  validateGraphData(graphNumber: number) {
     this.graphsData[graphNumber].channelNameX = this.getChannelLabelsFromName(
       graphNumber, [this.graphsData[graphNumber].channelX])[0];
   }
@@ -117,7 +123,9 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
 
   updateGraph(graphId: string, newData: any) {
     const graphElement = this.plotlyGraphs.find(el => el.nativeElement.id === graphId);
-    if (graphElement) {
+    if (newData.error) {
+      this.showPopup('Error', newData.error);
+    } else if (graphElement) {
       Plotly.react(graphElement.nativeElement, JSON.parse(newData));
     }
   }
@@ -134,4 +142,10 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
     });
   }
 
+  showPopup(title: string, message: string): void {
+    this.dialog.open(PopupMessageComponent, {
+      width: '250px',
+      data: {title: title, message: message}
+    });
+  }
 }

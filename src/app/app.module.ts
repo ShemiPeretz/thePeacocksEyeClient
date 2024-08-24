@@ -26,6 +26,8 @@ import {MatMenu} from "@angular/material/menu";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatCheckbox} from "@angular/material/checkbox";
+import { PopupMessageComponent } from './components/popup-message/popup-message.component';
+import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     TranslatePipePipe,
     AlertsComponent,
     AirQualityComponent,
-    ClimateComponent
+    ClimateComponent,
+    PopupMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,9 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatDatepickerInput,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatCheckbox
+    MatCheckbox,
+    MatDialogActions,
+    MatDialogContent
   ],
   providers: [
     provideClientHydration(),

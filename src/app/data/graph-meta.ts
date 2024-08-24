@@ -12,7 +12,7 @@ export interface GraphMeta {
   dataset: Dataset;
   cumulative: boolean;
 }
-''
+
 export interface TimeInterval {
   startTime: Date;
   endTime: Date;
@@ -37,7 +37,7 @@ export const STATIONS: { [key: number]: string } = {
 export const GRAPH_TYPES: { [key: string]: string } = {
   'line': 'Line Graph',
   'bar': 'Bar Graph',
-  'pie': 'Pie Chart'
+  'scatter': 'Scatter Graph'
 };
 
 export const WEATHER_STATIONS: { [key: string]: number[] } = {
@@ -1746,14 +1746,12 @@ export const DAILY_CHANNELS: { [key: string]: string } = {
   "tmp_air_min": "Minimum Air Temperature",
   "tmp_grass_min": "Minimum Grass Temperature",
   "sns_drt": "Sunshine Duration",
-  "rpr_gale": "Gale Report",
   "year": "Year",
   "month": "Month",
   "day": "Day"
 };
 
 export const RAIN_CHANNELS_DAILY: { [key: string]: string } = {
-  "stn_num": "Station Number",
   "time_obs": "Observation Time",
   "rain_06_next": "Rainfall (06:00 to next day 06:00)",
   "year": "Year",
@@ -1762,24 +1760,19 @@ export const RAIN_CHANNELS_DAILY: { [key: string]: string } = {
 };
 
 export const RAIN_CHANNELS_MONTHLY: { [key: string]: string } = {
-  "stn_num": "Station Number",
   "time_obs": "Observation Time",
   "rain_ttl": "Total Rainfall",
   "rain_days_num": "Number of Rainy Days",
-  "year": "Year",
-  "month": "Month",
   "rain_max_day": "Day with Maximum Rainfall",
   "rain_max_val": "Maximum Rainfall Value"
 };
 
 export const RAIN_CHANNELS_YEARLY: { [key: string]: string } = {
-  "stn_num": "Station Number",
   "time_obs": "Observation Time",
   "rain_ttl": "Total Rainfall"
 };
 
 export const RADIATION_CHANNELS: { [key: string]: string } = {
-  "stn_num": "Station Number",
   "time_obs": "Observation Time",
   "rad_type": "Radiation Type",
   "rad_0": "Radiation 0",
