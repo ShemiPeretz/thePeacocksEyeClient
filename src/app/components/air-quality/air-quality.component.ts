@@ -23,29 +23,70 @@ export class AirQualityComponent implements OnInit{
   no2:number = 5;
   o3:number = 81;
 
+  private airQualityDataCacheKey: string = 'airQualityCache';
+  private cacheDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
+
+
 
   constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
-    this.getAirQualityChannelsValues();
+    // Fetching air quality data from server
+    this.getAirQualityChannelsData();
+    // Setting air quality description by air quality level
     this.airQualityDescription = this.getDescriptionByLevel();
   }
 
-  getAirQualityChannelsValues(): void {
-    this.dataService.getAirQuality().subscribe(data => {
-        this.setAirQualityChannelsValues(data);
-      }
-    );
+  getAirQualityChannelsData(): void {
+    const cachedData = this.getCachedAirQualityData();
+    if (cachedData) {
+      this.setAirQualityChannelsData(cachedData);
+    } else {
+      this.dataService.getAirQuality().subscribe(data => {
+          this.setAirQualityChannelsData(data);
+          this.cacheAirQualityData(data);
+        }
+      );
+    }
   }
 
-  setAirQualityChannelsValues(data: any) : void {
+  setAirQualityChannelsData(data: any) : void {
     const channels = data.channels;
     this.pm2 = channels['PM2.5'];
     this.pm10 = channels['PM10'];
     this.no2 = channels['NO2'];
     this.o3 = channels['O3'];
   }
+
+  private cacheAirQualityData(data: any): void {
+    this.cacheData(data, this.airQualityDataCacheKey);
+  }
+
+
+  private cacheData(data: any, cacheKey: string) {
+    const cacheData = {
+      timestamp: new Date().getTime(),
+      data: data
+    };
+    localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+  }
+
+  private getCachedAirQualityData(): any {
+    return this.getCachedData(this.airQualityDataCacheKey);
+  }
+
+  private getCachedData(cacheKey: string): any {
+    const cachedString = localStorage.getItem(cacheKey);
+    if (!cachedString) return null;
+    const {timestamp, data} = JSON.parse(cachedString);
+    if (new Date().getTime() - timestamp > this.cacheDuration) {
+      localStorage.removeItem(cacheKey);
+      return null;
+    }
+    return data;
+  }
+
 
   getBackgroundColorByLevel(): string{
     switch (this.airQualityLevel){
