@@ -86,6 +86,7 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
   }
 
   validateGraphData(graphNumber: number) {
+    // Check duplicated channels in X and Y
     this.graphsData[graphNumber].channelNameX = this.getChannelLabelsFromName(
       graphNumber, [this.graphsData[graphNumber].channelX])[0];
   }
@@ -125,6 +126,8 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
     const graphElement = this.plotlyGraphs.find(el => el.nativeElement.id === graphId);
     if (newData.error) {
       this.showPopup('Error', newData.error);
+      const graphNumber = Number(graphId.charAt(5)) - 1;
+      this.isEditModes[graphNumber] = !this.isEditModes[graphNumber];
     } else if (graphElement) {
       Plotly.react(graphElement.nativeElement, JSON.parse(newData));
     }
