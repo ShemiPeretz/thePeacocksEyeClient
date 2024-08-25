@@ -11,6 +11,7 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getCurrentWeatherForSite(siteId: number): Observable<any> {
+    console.log("Site sent to server = " + siteId);
     const requestData = { station: siteId };
     return this.http.post<any>('http://127.0.0.1:8080/weather_summary/', requestData);
   }
