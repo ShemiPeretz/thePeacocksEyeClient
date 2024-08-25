@@ -9,7 +9,7 @@
           (selectionChange)="onDropdownChange($event)"
         >
           <mat-option *ngFor="let site of allSites" [value]="site">
-            {{ site.siteName | translate }}
+            {{ site.siteName }}
           </mat-option>
         </mat-select>
       </div>
@@ -34,7 +34,7 @@
           </div>
           <div class="wind-speed">
             <mat-icon>air</mat-icon>
-            {{ 'Wind Speed'}}: {{ windSpeed }} {{ 'km/h' | translate }}
+            {{ 'Wind Speed'}}: {{ windSpeed }} {{ 'km/h' }}
           </div>
           <div class="wind-direction">
             <mat-icon>explore</mat-icon>

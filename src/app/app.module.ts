@@ -16,7 +16,6 @@ import { GraphsComponent } from './components/graphs/graphs.component';
 import { LayoutSidebarComponent } from './components/graphs/layout-sidebar/layout-sidebar.component';
 import { FourGarphsLayoutComponent } from './components/graphs/layouts/four-garphs-layout/four-garphs-layout.component';
 import { ThreeGarphsLayoutComponent } from './components/graphs/layouts/three-garphs-layout/three-garphs-layout.component';
-import { TranslatePipePipe } from './translate-pipe.pipe';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import {NgOptimizedImage} from "@angular/common";
 import { AirQualityComponent } from './components/air-quality/air-quality.component';
@@ -39,7 +38,6 @@ import {MatDialogActions, MatDialogContent} from "@angular/material/dialog";
     LayoutSidebarComponent,
     FourGarphsLayoutComponent,
     ThreeGarphsLayoutComponent,
-    TranslatePipePipe,
     AlertsComponent,
     AirQualityComponent,
     ClimateComponent,

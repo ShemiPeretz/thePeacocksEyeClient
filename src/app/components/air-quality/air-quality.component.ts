@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from "../../data.service";
-import {channel} from "node:diagnostics_channel";
 
 export enum AirQualityLevel{
   Dangerous = "Dangerous",
@@ -10,6 +9,10 @@ export enum AirQualityLevel{
   Excellent = "Excellent"
 }
 
+/**
+ * @component AirQualityComponent
+ * @description Displays air quality data & index
+ */
 @Component({
   selector: 'app-air-quality',
   templateUrl: './air-quality.component.html',
@@ -31,6 +34,11 @@ export class AirQualityComponent implements OnInit{
   constructor(private dataService: DataService) {
   }
 
+  /**
+   * Initializes the component.
+   * Fetches the current Air Quality data.
+   * Sets the air quality text description.
+   */
   ngOnInit() {
     // Fetching air quality data from server
     this.getAirQualityChannelsData();
@@ -38,6 +46,10 @@ export class AirQualityComponent implements OnInit{
     this.airQualityDescription = this.getDescriptionByLevel();
   }
 
+  /**
+   * Fetches the current Air Quality data from the Server or Cache (if exists and not expired).
+   * If fetched from server -> Caches the data
+   */
   getAirQualityChannelsData(): void {
     const cachedData = this.getCachedAirQualityData();
     if (cachedData) {
@@ -51,6 +63,10 @@ export class AirQualityComponent implements OnInit{
     }
   }
 
+  /**
+   * Sets the air quality component variables from data
+   * @param data - Holds all air quality channels
+   */
   setAirQualityChannelsData(data: any) : void {
     const channels = data.channels;
     this.pm2 = channels['PM2.5'];
@@ -59,11 +75,21 @@ export class AirQualityComponent implements OnInit{
     this.o3 = channels['O3'];
   }
 
+  /**
+   * Caches the air quality data
+   * @param data - Holds all air quality channels
+   * @private
+   */
   private cacheAirQualityData(data: any): void {
     this.cacheData(data, this.airQualityDataCacheKey);
   }
 
-
+  /**
+   * General data caching in localstorage
+   * @param data - any
+   * @param cacheKey - key to store in localstorage dictionary
+   * @private
+   */
   private cacheData(data: any, cacheKey: string) {
     const cacheData = {
       timestamp: new Date().getTime(),
