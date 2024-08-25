@@ -20,7 +20,7 @@ export interface TimeInterval {
 
 export enum Dataset {
   daily_rain = "daily_rain",
-  monty_rain = "monty_rain",
+  monty_rain = "monthly_rain",
   yearly_rain = "yearly_rain",
   hourly = "hourly",
   daily = "daily",
