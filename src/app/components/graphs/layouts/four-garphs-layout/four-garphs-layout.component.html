@@ -122,7 +122,7 @@
     </div>
     <div class="column-edit-graph" *ngIf="isEditModes[3]">
       <mat-label>Dataset</mat-label>
-      <mat-select [(ngModel)]="graphsData[2].dataset">
+      <mat-select [(ngModel)]="graphsData[3].dataset">
         <mat-option *ngFor="let dataset of datasets | keyvalue" [value]="dataset.key">{{ dataset.value }}</mat-option>
       </mat-select>
       <mat-label>Station</mat-label>

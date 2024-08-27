@@ -1723,7 +1723,7 @@ export const RAIN_STATIONS: { [key: string]: number[] } = {
 
 export const HOURLY_CHANNELS: { [key: string]: string } = {
   "stn_num": "Station Number",
-  "time_obs": "Observation Time",
+  "time_obs": "Time",
   "prs_stn": "Station Pressure",
   "prs_sea_lvl": "Sea Level Pressure",
   "prs_lvl_hgt": "Pressure Level Height",
@@ -1732,56 +1732,38 @@ export const HOURLY_CHANNELS: { [key: string]: string } = {
   "tmp_dew_pnt": "Dew Point Temperature",
   "hmd_rlt": "Relative Humidity",
   "wind_dir": "Wind Direction",
-  "wind_spd": "Wind Speed",
-  "year": "Year",
-  "month": "Month",
-  "day": "Day",
-  "hour": "Hour"
+  "wind_spd": "Wind Speed"
 };
 
 export const DAILY_CHANNELS: { [key: string]: string } = {
   "stn_num": "Station Number",
-  "time_obs": "Observation Time",
+  "time_obs": "Time",
   "tmp_air_max": "Maximum Air Temperature",
   "tmp_air_min": "Minimum Air Temperature",
   "tmp_grass_min": "Minimum Grass Temperature",
-  "sns_drt": "Sunshine Duration",
-  "year": "Year",
-  "month": "Month",
-  "day": "Day"
+  "sns_drt": "Sunshine Duration"
 };
 
 export const RAIN_CHANNELS_DAILY: { [key: string]: string } = {
-  "time_obs": "Observation Time",
-  "rain_06_next": "Rainfall (06:00 to next day 06:00)",
-  "year": "Year",
-  "month": "Month",
-  "day": "Day"
+  "time_obs": "Time",
+  "rain_06_next": "Rainfall (6AM to 6AM) [mm]"
 };
 
 export const RAIN_CHANNELS_MONTHLY: { [key: string]: string } = {
-  "time_obs": "Observation Time",
-  "rain_ttl": "Total Rainfall",
+  "time_obs": "Time",
+  "rain_ttl": "Total Rainfall [mm]",
   "rain_days_num": "Number of Rainy Days",
   "rain_max_day": "Day with Maximum Rainfall",
-  "rain_max_val": "Maximum Rainfall Value"
+  "rain_max_val": "Maximum Rainfall Value [mm]"
 };
 
 export const RAIN_CHANNELS_YEARLY: { [key: string]: string } = {
-  "time_obs": "Observation Time",
-  "rain_ttl": "Total Rainfall"
+  "time_obs": "Time",
+  "rain_ttl": "Total Rainfall [mm]"
 };
 
 export const RADIATION_CHANNELS: { [key: string]: string } = {
-  "time_obs": "Observation Time",
-  "rad_type": "Radiation Type",
-  "rad_0": "Radiation 0",
-  "rad_1": "Radiation 1",
-  "rad_2": "Radiation 2",
-  "rad_3": "Radiation 3",
-  "rad_4": "Radiation 4",
-  "rad_5": "Radiation 5",
-  "rad_6": "Radiation 6",
+  "time_obs": "Time",
   "rad_7": "Radiation 7",
   "rad_8": "Radiation 8",
   "rad_9": "Radiation 9",
@@ -1792,8 +1774,5 @@ export const RADIATION_CHANNELS: { [key: string]: string } = {
   "rad_14": "Radiation 14",
   "rad_15": "Radiation 15",
   "rad_16": "Radiation 16",
-  "rad_17": "Radiation 17",
-  "year": "Year",
-  "month": "Month",
-  "day": "Day"
+  "rad_17": "Radiation 17"
 };
