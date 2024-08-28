@@ -10,7 +10,7 @@
         <mat-option *ngFor="let dataset of datasets | keyvalue" [value]="dataset.key">{{ dataset.value }}</mat-option>
       </mat-select>
       <mat-label>Station</mat-label>
-      <mat-select [(ngModel)]="graphsData[0].station">
+      <mat-select [(ngModel)]="graphsData[0].station" multiple [compareWith]="compareStations" (selectionChange)="onStationSelectionChange($event, 0)">
         <mat-option *ngFor="let station of graphs.stationsByDataset[graphsData[0].dataset] | keyvalue" [value]="station.value">{{ station.key }}</mat-option>
       </mat-select>
       <mat-label>Graph Type</mat-label>
@@ -48,7 +48,7 @@
         <mat-option *ngFor="let dataset of datasets | keyvalue" [value]="dataset.key">{{ dataset.value }}</mat-option>
       </mat-select>
       <mat-label>Station</mat-label>
-      <mat-select [(ngModel)]="graphsData[1].station">
+      <mat-select [(ngModel)]="graphsData[1].station" multiple [compareWith]="compareStations" (selectionChange)="onStationSelectionChange($event, 1)">
         <mat-option *ngFor="let station of graphs.stationsByDataset[graphsData[1].dataset] | keyvalue" [value]="station.value">{{ station.key }}</mat-option>
       </mat-select>
       <mat-label>Graph Type</mat-label>
@@ -88,7 +88,7 @@
         <mat-option *ngFor="let dataset of datasets | keyvalue" [value]="dataset.key">{{ dataset.value }}</mat-option>
       </mat-select>
       <mat-label>Station</mat-label>
-      <mat-select [(ngModel)]="graphsData[2].station">
+      <mat-select [(ngModel)]="graphsData[2].station"  multiple [compareWith]="compareStations" (selectionChange)="onStationSelectionChange($event, 2)">
         <mat-option *ngFor="let station of graphs.stationsByDataset[graphsData[2].dataset] | keyvalue" [value]="station.value">{{ station.key }}</mat-option>
       </mat-select>
       <mat-label>Graph Type</mat-label>
@@ -126,7 +126,7 @@
         <mat-option *ngFor="let dataset of datasets | keyvalue" [value]="dataset.key">{{ dataset.value }}</mat-option>
       </mat-select>
       <mat-label>Station</mat-label>
-      <mat-select [(ngModel)]="graphsData[3].station">
+      <mat-select [(ngModel)]="graphsData[3].station"  multiple [compareWith]="compareStations" (selectionChange)="onStationSelectionChange($event, 3)">
         <mat-option *ngFor="let station of graphs.stationsByDataset[graphsData[3].dataset] | keyvalue" [value]="station.value">{{ station.key }}</mat-option>
       </mat-select>
       <mat-label>Graph Type</mat-label>

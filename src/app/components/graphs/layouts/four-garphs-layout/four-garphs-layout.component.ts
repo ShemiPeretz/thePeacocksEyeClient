@@ -4,6 +4,7 @@ import {Dataset, GRAPH_TYPES, GraphMeta, STATIONS} from "../../../../data/graph-
 import {FormControl} from '@angular/forms';
 import {PopupMessageComponent} from "../../../popup-message/popup-message.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatSelectChange} from "@angular/material/select";
 
 declare var Plotly: any;
 
@@ -150,5 +151,15 @@ export class FourGarphsLayoutComponent implements OnInit, AfterViewInit {
       width: '250px',
       data: {title: title, message: message}
     });
+  }
+
+  compareStations(station1: number, station2: number): boolean {
+    return station1 === station2;
+  }
+
+  onStationSelectionChange(event: MatSelectChange, graphNumber: number): void {
+    if (event.value.length > 2) {
+      this.graphsData[graphNumber].station = event.value.slice(0, 2);
+    }
   }
 }
