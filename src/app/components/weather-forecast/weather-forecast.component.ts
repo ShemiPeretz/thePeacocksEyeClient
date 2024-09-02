@@ -39,6 +39,11 @@ export class WeatherForecastComponent implements OnInit{
 
   constructor(private dataService: DataService) { }
 
+  /**
+   * @function ngOnInit
+   * @description Lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
+   * It initializes the component by setting allowed sites, fetching active sites, and getting the current weather for the default site.
+   */
   ngOnInit(): void {
 
     // // Testing if server side rendering (SSR) is off (should return true + localstorage should be available)
@@ -57,6 +62,12 @@ export class WeatherForecastComponent implements OnInit{
     this.getCurrentWeatherForSelectedSite();
   }
 
+
+  /**
+   * @function setAllowedSites
+   * @description Initializes the `allowedSites` array with a predefined list of sites.
+   * @private
+   */
   private setAllowedSites(): void {
     this.allowedSites = [
       {"siteId": 411, "siteName": "BEER SHEVA BGU"},
@@ -71,6 +82,10 @@ export class WeatherForecastComponent implements OnInit{
     ]
   }
 
+  /**
+ * @function setActiveSites
+ * @description  A private method that fetches and sets the active weather sites. It first checks for cached data, and if not available, it fetches new data from the server. It also sets the default site for the component start-up.
+ */
   private setActiveSites() {
     if (this.testMode){
       this.allSites =  this.allowedSites;
@@ -89,6 +104,11 @@ export class WeatherForecastComponent implements OnInit{
     this.getDefaultSite();
   }
 
+   /**
+  * Processes the raw active sites data into a formatted array of site objects. It also filters the sites to include only those in the `allowedSites` list.
+  * @param data - The raw active sites data.
+  * @returns An array of site objects.
+  */
   processActiveSitesData(data: any): any[] {
     let entries: [string, unknown][] = Object.entries(data);
     const activeSites: any[] = entries.map(entry => ({
@@ -104,12 +124,18 @@ export class WeatherForecastComponent implements OnInit{
     return filteredSites;
   }
 
+   /**
+  * Sets the `selectedSite` to either the site with ID 411 (BEER SHEVA BGU) if it exists in the `allSites` array, or the first site in the array if it doesn't.
+  */
   getDefaultSite(): void{
     const site = this.allSites.find(site => site.siteId === 411)
     this.selectedSite = site ?? this.allSites[0];
    // this.selectedSite = {"siteId": 411,"siteName": 'BEER SHEVA BGU'};
   }
 
+   /**
+  * Fetches the current weather data for the selected site. It first checks for cached data, and if not available, it fetches new data from the server.
+  */
   getCurrentWeatherForSelectedSite(){
     if (this.testMode) {
       return;
@@ -127,6 +153,10 @@ export class WeatherForecastComponent implements OnInit{
     }
   }
 
+   /**
+  * Processes the raw weather data and updates the component's weather-related properties with the received values.
+  * @param data - The raw weather data.
+  */
   processWeatherData(data: any): void {
     // Reset all variables to zero at the start
     this.temperature = 0;
@@ -178,14 +208,30 @@ export class WeatherForecastComponent implements OnInit{
     this.calculateWeatherCondition();
   }
 
+   /**
+  * A private method that retrieves cached weather data for a specific site from local storage.
+  * @param siteId - The ID of the site.
+  * @returns The cached weather data, or null if not available.
+  */
   private getCachedWeatherData(siteId: number): any {
     const cacheKey: string = `${this.weatherDataCacheKey}_${siteId}`;
     return this.getCachedData(cacheKey);
   }
+
+  /**
+  * A private method that retrieves cached active sites data from local storage.
+  * @returns The cached active sites data, or null if not available.
+  */
   private getCachedActiveSitesData(): any {
     return this.getCachedData(this.activeSitesDataCacheKey);
   }
 
+
+   /**
+  * A private method that retrieves cached data from local storage for a given cache key and checks if it's still valid based on the cache duration.
+  * @param cacheKey - The key used to store the cached data.
+  * @returns The cached data, or null if not available or expired.
+  */
   private getCachedData(cacheKey: string): any {
     const cachedString = localStorage.getItem(cacheKey);
     if (!cachedString) return null;
@@ -197,15 +243,30 @@ export class WeatherForecastComponent implements OnInit{
     return data;
   }
 
+
+ /**
+  * A private method that caches weather data for a specific site in local storage.
+  * @param siteId - The ID of the site.
+  * @param data - The weather data to be cached.
+  */
   private cacheWeatherData(siteId: number, data: any): void {
     const cacheKey = `${this.weatherDataCacheKey}_${siteId}`;
     this.cacheData(data, cacheKey);
   }
 
+   /**
+  * A private method that caches active sites data in local storage.
+  * @param data - The active sites data to be cached.
+  */
   private cacheActiveSitesData(data: any): void {
     this.cacheData(data, this.activeSitesDataCacheKey);
   }
 
+   /**
+  * A private method that caches any data in local storage with a timestamp.
+  * @param data - The data to be cached.
+  * @param cacheKey - The key used to store the cached data.
+  */
   private cacheData(data: any, cacheKey: string) {
     const cacheData = {
       timestamp: new Date().getTime(),
@@ -214,15 +275,27 @@ export class WeatherForecastComponent implements OnInit{
     localStorage.setItem(cacheKey, JSON.stringify(cacheData));
   }
 
+   /**
+  * An event handler that updates the selected site and fetches new weather data when the user selects a different site from the dropdown.
+  * @param event - The event object containing the selected site.
+  */
   onDropdownChange(event: any) {
     this.selectedSite = event.value;
     this.getCurrentWeatherForSelectedSite();
   }
 
+   /**
+  * Calculates the rotation angle for the wind direction arrow based on the current wind direction.
+  * @returns The rotation angle for the wind direction arrow.
+  */
   getWindArrowRotation(): string {
     return `rotate(${this.windDirection - 90}deg)`;
   }
 
+   /**
+  * Determines the current weather condition based on various weather parameters like rain, temperature, humidity, and wind speed.
+  * @returns The current weather condition.
+  */
   calculateWeatherCondition(): WeatherCondition {
     if (this.rain > 0.5){
       this.weatherCondition =  WeatherCondition.rainy;
@@ -242,6 +315,10 @@ export class WeatherForecastComponent implements OnInit{
 
   // protected WeatherCondition = WeatherCondition;
 
+   /**
+  * Returns the appropriate background image URL based on the current weather condition.
+  * @returns The URL of the background image.
+  */
   getBackgroundImage(): string {
     switch (this.weatherCondition){
       case WeatherCondition.sunny:
