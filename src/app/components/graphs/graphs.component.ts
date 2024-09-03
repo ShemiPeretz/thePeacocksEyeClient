@@ -47,14 +47,26 @@ export class GraphsComponent implements OnInit{
   constructor(private dataService: DataService) {
   }
 
+  /**
+   * Initializes the component by setting the default layout to four.
+   */
   ngOnInit(){
     this.chosenLayout = DashboardLayout.four;
   }
 
+  /**
+   * Updates the chosen layout based on the event received.
+   * @param event - The new layout value
+   */
   changeLayout(event:any){
     this.chosenLayout =event;
   }
 
+  /**
+   * Generates an array of default GraphMeta objects.
+   * @param numberOfGraphs - The number of default graph metadata objects to generate
+   * @returns An array of GraphMeta objects
+   */
   getDefaultGraphMeta(numberOfGraphs: number): GraphMeta[]{
     let graphsData: GraphMeta[] = [];
 
@@ -86,6 +98,10 @@ export class GraphsComponent implements OnInit{
 
   }
 
+  /**
+   * Fetches default graphs from the data service.
+   * @returns A Promise that resolves with the default graphs as a string
+   */
   getDefaultGraphs(): Promise<string> {
     return new Promise((resolve, reject) => {
       this.dataService.getDefaultGraphs().subscribe(
@@ -95,6 +111,11 @@ export class GraphsComponent implements OnInit{
     });
   }
 
+  /**
+   *  Sends a request to build a graph based on the provided metadata.
+   *  @param graphData - The GraphMeta object containing graph configuration
+   *  @returns A Promise that resolves with the built graph as a string
+   */
   buildGraph(graphData: GraphMeta): Promise<string> {
     return new Promise((resolve, reject) => {
       this.dataService.postGraph(graphData).subscribe(
@@ -104,6 +125,12 @@ export class GraphsComponent implements OnInit{
     });
   }
 
+  /**
+   * Caches a graph in memory and localStorage.
+   * @param layout - The layout identifier
+   * @param graphId - The graph identifier
+   * @param graphData - The graph data to cache
+   */
   setGraph(layout: string, graphId: string, graphData: string): void {
     const cacheKey = this.getCacheKey(layout, graphId);
     this.cache[cacheKey] = graphData;
@@ -111,6 +138,12 @@ export class GraphsComponent implements OnInit{
     localStorage.setItem(cacheKey, graphData);
   }
 
+  /**
+   * Retrieves a cached graph from memory or localStorage.
+   * @param layout - The layout identifier
+   * @param graphId - The graph identifier
+   * @returns The cached graph data as a string, or null if not found
+   */
   getGraph(layout: string, graphId: string): string | null {
     const cacheKey = this.getCacheKey(layout, graphId);
     // Check in-memory cache first
@@ -126,6 +159,10 @@ export class GraphsComponent implements OnInit{
     return null;
   }
 
+  /**
+   * Clears the graph cache, either for a specific layout or all layouts.
+   * @param layout - Optional. The layout to clear cache for. If not provided, clears all cache.
+   */
   clearCache(layout?: string): void {
     if (layout) {
       // Clear cache for specific layout
@@ -151,6 +188,12 @@ export class GraphsComponent implements OnInit{
     }
   }
 
+  /**
+   * Generates a cache key for a specific graph.
+   * @param layout - The layout identifier
+   * @param graphId - The graph identifier
+   * @returns A string representing the cache key
+   */
   private getCacheKey(layout: string, graphId: string): string {
     return `graph_${layout}_${graphId}`;
   }

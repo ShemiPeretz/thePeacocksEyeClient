@@ -23,6 +23,9 @@ export class AlertsComponent implements OnInit{
   constructor(private dataService: DataService) {
   }
 
+  /**
+   * OnInit lifecycle getting alerts and setting alert level
+   */
   ngOnInit() {
     const cachedData = this.getCachedData();
     if (cachedData) {
@@ -43,6 +46,10 @@ export class AlertsComponent implements OnInit{
     // this.noAlerts = false;
   }
 
+  /**
+   * A private method that retrieves cached alert data from local storage. It checks if the cached data is still valid based on the cache duration.
+   * @private
+   */
   private getCachedData(): any {
     const cachedString = localStorage.getItem(this.cacheKey);
     if (!cachedString) return null;
@@ -56,6 +63,11 @@ export class AlertsComponent implements OnInit{
     return data;
   }
 
+  /**
+   * A private method that caches alert data in local storage with a timestamp.
+   * @param data
+   * @private
+   */
   private cacheData(data: any): void {
     const cacheData = {
       timestamp: new Date().getTime(),
@@ -64,6 +76,10 @@ export class AlertsComponent implements OnInit{
     localStorage.setItem(this.cacheKey, JSON.stringify(cacheData));
   }
 
+  /**
+   * A private method that fetches alert data from an RSS feed using the DataService. It processes the received data and caches it.
+   * @private
+   */
   private getAlertsFromRSSFeed() {
     this.dataService.getAlerts().subscribe(data => {
       this.processAlerts(data)
@@ -73,6 +89,10 @@ export class AlertsComponent implements OnInit{
     });
   }
 
+  /**
+   * Processes the received alert data. If there are no alerts, it sets `noAlerts` to true. Otherwise, it populates the `alerts` array and sets `noAlerts` to false.
+   * @param data
+   */
   processAlerts(data: any){
     if (data === "no alerts") {
         this.noAlerts = true;
@@ -82,6 +102,9 @@ export class AlertsComponent implements OnInit{
     }
   }
 
+  /**
+   * Determines the current alert level based on the presence and number of alerts. It sets the `alertLevel` to Low, Medium, or High accordingly.
+   */
   setAlertLevel() {
     if (this.noAlerts) {
       this.alertLevel = AlertLevel.Low;
@@ -94,7 +117,9 @@ export class AlertsComponent implements OnInit{
     }
   }
 
-
+  /**
+   * Returns a background color string based on the current alert level. The color changes depending on whether there are no alerts or if the alert level is Low, Medium, or High.
+   */
   getBackgroundColorByLevel(): string{
     if (this.noAlerts){
       return 'rgba(103, 203, 145,0.65)'

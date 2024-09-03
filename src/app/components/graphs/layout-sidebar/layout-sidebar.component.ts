@@ -14,6 +14,13 @@ export class LayoutSidebarComponent {
 
   constructor() {
   }
+
+  /**
+   * This method is called when a user selects a new layout. It performs two actions:
+   *    1. Emits the newly selected layout to the parent component using the `myLayout` EventEmitter.
+   *    2. Updates the `chosenLayout` property with the newly selected layout.
+   * @param layout - The newly selected `DashboardLayout` option.
+   */
   changeLayout(layout: DashboardLayout) {
     this.myLayout.emit(layout);
     this.chosenLayout=layout;

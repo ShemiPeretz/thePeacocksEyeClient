@@ -98,10 +98,19 @@ export class AirQualityComponent implements OnInit{
     localStorage.setItem(cacheKey, JSON.stringify(cacheData));
   }
 
+  /**
+   * Retrieves cached air quality data.
+   * @private
+   */
   private getCachedAirQualityData(): any {
     return this.getCachedData(this.airQualityDataCacheKey);
   }
 
+  /**
+   * Retrieves cached data for a given cache key.
+   * @param cacheKey - The key to retrieve data from localstorage
+   * @private
+   */
   private getCachedData(cacheKey: string): any {
     const cachedString = localStorage.getItem(cacheKey);
     if (!cachedString) return null;
@@ -114,6 +123,9 @@ export class AirQualityComponent implements OnInit{
   }
 
 
+  /**
+   *  Returns a background color string based on the current air quality level.
+   */
   getBackgroundColorByLevel(): string{
     switch (this.airQualityLevel){
       case AirQualityLevel.Dangerous:
@@ -129,6 +141,9 @@ export class AirQualityComponent implements OnInit{
     }
   }
 
+  /**
+   * Returns a description string based on the current air quality level.
+   */
   getDescriptionByLevel(): string {
     switch (this.airQualityLevel){
       case AirQualityLevel.Dangerous:
@@ -144,6 +159,9 @@ export class AirQualityComponent implements OnInit{
     }
   }
 
+  /**
+   * Returns a string of recommended activities based on the current air quality level. (Note: This function is currently empty for all levels)
+   */
   getActivitiesByLevel(): string {
     switch (this.airQualityLevel){
       case AirQualityLevel.Dangerous:
